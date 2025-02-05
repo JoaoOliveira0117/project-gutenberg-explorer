@@ -19,6 +19,5 @@ def from_pgcatalog_csv():
       'tags': str(row['Bookshelves']).split(';'),
     })
 
-  print(books[0])
   return books
 

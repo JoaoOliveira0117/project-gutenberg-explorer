@@ -30,7 +30,27 @@ def get_books_json(books):
 
 print(get_books_json(books))
 """
-
+import json
+from dotenv import load_dotenv
 from src.from_pgcatalog_csv import from_pgcatalog_csv
+from src.publisher_client import publish
+from src.config import get_env
 
-from_pgcatalog_csv()
+load_dotenv()
+config = get_env()
+
+def publish_books():
+  books = from_pgcatalog_csv()
+  project_id = config.get("PROJECT_ID")
+  futures = []
+
+  for i in range(0, 100, config.get("BATCH_SIZE")):
+    batch = books[i:i + config.get("BATCH_SIZE")]
+    message_json = json.dumps(batch).encode("utf-8")
+
+    futures.append(publish(project_id, message_json))
+
+  for future in futures:
+    future.result()
+
+publish_books()
