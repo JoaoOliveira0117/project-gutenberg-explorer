@@ -1,5 +1,6 @@
 import express from "express";
 import { getAllBooks } from "./controllers/getAllBooks.js";
+import { getBookById } from "./controllers/getBookById.js";
 
 const app = express()
 
@@ -10,6 +11,11 @@ const port = process.env.PORT || 3000;
 app.get("/", async (req, res) => {
   const books = await getAllBooks();
   res.json(books);
+});
+
+app.get("/:id", async (req, res) => {
+  const book = await getBookById(Number(req.params.id));
+  res.json(book);
 });
 
 app.listen(port, () => {

@@ -8,11 +8,9 @@ const getAllBooks = async (page: number = 1, limit: number = 10, search: string 
       `title.ilike.%${search}%`,
     ];
 
-    // Busca em arrays corretamente, garantindo formato {valor}
     conditions.push(`tags.cs.{${search}}`);
     conditions.push(`subjects.cs.{${search}}`);
 
-    // Se `search` for um número, busca também por `id` e `book_id`
     if (!isNaN(Number(search))) {
       conditions.push(`id.eq.${search}`);
       conditions.push(`book_id.eq.${search}`);
