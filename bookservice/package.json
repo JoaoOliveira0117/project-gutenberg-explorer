@@ -1,0 +1,24 @@
+{
+  "name": "bookservice",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Allows connection to database and book query",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --loader=ts-node/esm --env-file=.env --watch src/index.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.48.1",
+    "express": "^4.21.2",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.1",
+    "ts-node": "^10.9.2"
+  }
+}
