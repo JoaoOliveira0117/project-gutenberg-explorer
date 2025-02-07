@@ -127,3 +127,6 @@ serviceAccountKey.json
 
 deploy.sh
 deploy_user_auth.sh
+
+package-lock.json
+node_modules
