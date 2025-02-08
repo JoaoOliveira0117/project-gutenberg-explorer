@@ -3,10 +3,15 @@ import AuthController from "./auth.controller.js";
 
 /**
  * @openapi
- * /api/user/me:
+ * /api/user/{id}:
  *  get:
  *    tags: [User]
  *    summary: Get current user details
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        description: User id
  *    responses:
  *      200:
  *        description: Success

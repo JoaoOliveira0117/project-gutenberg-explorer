@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import router from "./routes/index.js";
 import { Passport } from "./config/passport.js";
+import { initializeSwagger } from "./config/swagger.js";
 
 const app = express()
 
@@ -10,6 +11,7 @@ app.use(express.json())
 
 Passport.initialize();
 
+app.use('/api-docs', ...initializeSwagger())
 app.use("/api", router);
 
 const port = process.env.PORT || 9000;
