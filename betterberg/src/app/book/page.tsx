@@ -3,14 +3,16 @@
 import { useEffect, useState } from "react";
 import { Grid2 as Grid, Typography, Card, CardMedia, Autocomplete, TextField, Container, Link } from "@mui/material";
 
-export default function Home() {
+export default function Books() {
   const [books, setBooks] = useState([] as any)
   const [search, setSearch] = useState("")
   
   useEffect(() => {
-    fetch("http://localhost:3000/?search=" + search)
+    fetch("/api/user").then((res) => res.json()).then((data) => console.log(data))
+
+    fetch("/api/books?search=" + search)
       .then(res => res.json())
-      .then(data => setBooks(data.data))
+      .then(data => setBooks(data.result.data))
   }, [search])
 
   return (

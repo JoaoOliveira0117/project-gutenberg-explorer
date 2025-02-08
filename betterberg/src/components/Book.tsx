@@ -7,12 +7,12 @@ export default function BookViewer({ id }: { id: string }) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch(`/api/proxy?id=${id}`)
+    fetch(`/api/books/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch book");
         return res.text();
       })
-      .then(setBookText)
+      .then((txt) => setBookText(txt))
       .catch((err) => setError(err.message));
   }, [id]);
 
