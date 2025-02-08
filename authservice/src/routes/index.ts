@@ -13,6 +13,6 @@ const router = Router();
 router.get('/google/redirect', validate(redirectValidation), passportMiddleware, redirectController);
 router.get('/google/callback', validate(callbackValidation), passportCallbackMiddleware, callbackController);
 
-router.get('/user/:id', authMiddleware, validate(getByIdValidation), getByIdController)
 router.get('/user/me', authMiddleware, getMeController)
+router.get('/user/:id', authMiddleware, validate(getByIdValidation), getByIdController)
 export default router;
