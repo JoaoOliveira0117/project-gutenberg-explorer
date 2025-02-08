@@ -6,7 +6,7 @@ import { Profile as GoogleProfile } from "passport-google-oauth20";
 
 /**
  * @openapi
- * /api/v1/auth/google/callback:
+ * /api/google/callback:
  *  get:
  *    tags: [Auth]
  *    summary: Redirects user to application after authentication

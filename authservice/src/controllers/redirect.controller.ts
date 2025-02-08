@@ -3,7 +3,7 @@ import AuthController from "./auth.controller.js";
 
 /**
  * @openapi
- * /api/v1/auth/google/redirect:
+ * /api/google/redirect:
  *  get:
  *    tags: [Auth]
  *    summary: Redirects user to Provider login page
