@@ -17,3 +17,15 @@ export const getByIdValidation = z.object({
     fields: z.string().transform((v, ctx) => 1)
   }).partial()
 });
+
+export const postFavoriteBookValidation = z.object({
+  params: z.object({
+    book_id: z.string()
+  })
+});
+
+export const postLastSeenBookValidation = z.object({
+  params: z.object({
+    book_id: z.string()
+  })
+});

@@ -4,7 +4,6 @@ import BooksController from "./books.controller.js";
 class GetAllBooks extends BooksController {
   async handle() {
     const { search, fields } = this.query as { search: string, fields: string[] };
-    console.log(this.query)
     const { skip = 0, take = 25 } = this.getPagination();
 
     const selectFields = fields?.length > 0 ? fields.join(",") : "*";

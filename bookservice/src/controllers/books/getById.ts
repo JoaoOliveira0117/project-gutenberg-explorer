@@ -6,8 +6,6 @@ class GetById extends BooksController {
     const { fields } = this.query as { fields: string[] }
     const { id } = this.params;
 
-    console.log(fields)
-
     const selectFields = fields?.length > 0 ? fields.join(",") : "*";
 
     return this.service.select(selectFields).eq('id', id).single();
