@@ -1,3 +1,4 @@
+import Secrets from "../config/secrets.js";
 import { generateToken } from "../utils/security.js";
 import withController from "../utils/withController.js";
 import AuthController from "./auth.controller.js";
@@ -23,7 +24,7 @@ import { Profile as GoogleProfile } from "passport-google-oauth20";
 class CallbackController extends AuthController {
   private async googleCallback() {
     const { profile } = this.user as { profile: GoogleProfile };
-    const service = this.UserService;
+    const service = await this.UserService;
     
     const user = await service.oauth(profile.id,{
       email: profile._json.email!
@@ -41,10 +42,10 @@ class CallbackController extends AuthController {
 
   async execute(): Promise<void> {
     try {
+      const secrets = await Secrets.initialize();
       const token = await this.handle() || ''
-      const appUrl = process.env.APP_URL
 
-      this.res.redirect(`${appUrl}/?token=${token}`);
+      this.res.redirect(`${secrets.getSecret("APP_URL")}/?token=${token}`);
     } catch (error: unknown) {
       console.log(error)
       this.res.status(500).send({ error });

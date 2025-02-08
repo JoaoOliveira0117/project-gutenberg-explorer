@@ -1,4 +1,4 @@
-import Controller from "../http/controller";
+import Controller from "../http/controller.js";
 import { Request, Response } from "express";
 
 type ControllerConstructor = new (req: Request, res: Response) => Controller;

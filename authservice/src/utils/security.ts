@@ -1,24 +1,24 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import Secrets from '../config/secrets.js';
 
 export async function decodeToken(value: string): Promise<JwtPayload | string> {
-  const secret = process.env.JWT_SECRET!
+  const secrets = await Secrets.initialize();
 
-  if (!secret) {
-    throw Error('Secrets not found (security.ts - decryptHash)');
-  }
+  if (!secrets)
+    throw Error('Secrets not found (security.ts - generateToken)');
 
-  return jwt.verify(value, secret);
+  return jwt.verify(value, secrets.getSecret("JWT_SECRET"));
 }
 
 export async function generateToken(user: { provider_id: string, email: string }): Promise<string> {
-  const secret = process.env.JWT_SECRET!
+  const secrets = await Secrets.initialize();
 
-  if (!secret)
-    throw Error('Secret not found (security.ts - generateToken)');
+  if (!secrets)
+    throw Error('Secrets not found (security.ts - generateToken)');
 
   return jwt.sign(
     { userId: user.provider_id, email: user.email, createdAt: new Date() },
-    secret,
+    secrets.getSecret("JWT_SECRET"),
     {
       expiresIn: '24h',
     }

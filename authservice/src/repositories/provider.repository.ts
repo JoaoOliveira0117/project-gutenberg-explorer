@@ -1,3 +1,5 @@
+import { SupabaseClient } from "@supabase/supabase-js";
+import { Database } from "../config/db.types.js";
 import db from "../config/db.js";
 
 export type ProviderRequest = {
@@ -14,8 +16,13 @@ export type ProviderResponse = {
 export default class ProviderRepository {
   protected db;
 
-  constructor() {
+  constructor(db: SupabaseClient<Database, "public", any>) {
     this.db = db.from('providers');
+  }
+
+  static async init() {
+    const database = await db();
+    return new ProviderRepository(database);
   }
 
   async findProvider(query: ProviderRequest): Promise<ProviderResponse> {

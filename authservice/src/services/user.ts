@@ -1,13 +1,20 @@
-import ProviderRepository from "../repositories/provider.repository copy.js";
+import db from "../config/db.js";
+import ProviderRepository from "../repositories/provider.repository.js";
 import UserRepository from "../repositories/user.repository.js";
 
 export default class UserService {
   protected userRepository;
   protected providerRepository;
 
-  constructor() {
-    this.userRepository = new UserRepository();
-    this.providerRepository = new ProviderRepository();
+  private constructor(db: any) {
+    this.userRepository = new UserRepository(db);
+    this.providerRepository = new ProviderRepository(db);
+  }
+
+  static async init() {
+    const database = await db();
+
+    return new UserService(database);
   }
 
   async findUserByEmail(email: string) {

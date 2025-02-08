@@ -1,4 +1,6 @@
+import { SupabaseClient } from "@supabase/supabase-js";
 import db from "../config/db.js";
+import { Database } from "../config/db.types.js";
 
 export type UserRequest = {
   email: string;
@@ -17,7 +19,7 @@ export type UserResponse = {
 export default class UserRepository {
   protected db;
 
-  constructor() {
+  constructor(db: SupabaseClient<Database, "public", any>) {
     this.db = db.from('users');
   }
 

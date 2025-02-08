@@ -7,6 +7,6 @@ export default class AuthController extends Controller {
 
   constructor(req: Request, res: Response) {
     super(req, res);
-    this.UserService = new UserService();
+    this.UserService = UserService.init();
   }
 }

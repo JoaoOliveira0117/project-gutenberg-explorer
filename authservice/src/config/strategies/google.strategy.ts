@@ -1,5 +1,6 @@
 import { VerifyCallback } from 'jsonwebtoken';
 import { Strategy, Profile } from 'passport-google-oauth20';
+import Secrets from '../secrets.js';
 
 export type GoogleUser = {
   accessToken: string;
@@ -26,10 +27,11 @@ export class GoogleStrategy extends Strategy {
   }
 
   public static async initialize() {
-    console.log(process.env.API_URL)
-    const clientId = process.env.GOOGLE_AUTH_CLIENT_ID!;
-    const clientSecret = process.env.GOOGLE_AUTH_CLIENT_SECRET!;
-    const apiUrl = process.env.API_URL!;
+    const secrets = await Secrets.initialize()
+
+    const clientId = secrets.getSecret("GOOGLE_AUTH_CLIENT_ID");
+    const clientSecret = secrets.getSecret("GOOGLE_AUTH_CLIENT_SECRET");
+    const apiUrl = secrets.getSecret("API_URL");
     return new GoogleStrategy(clientId, clientSecret, apiUrl);
   }
 }

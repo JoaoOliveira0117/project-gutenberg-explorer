@@ -21,7 +21,7 @@ import AuthController from "./auth.controller.js";
 class GetByIdController extends AuthController {
   async handle() {   
     const { id } = this.params;
-    const service = this.UserService;
+    const service = await this.UserService;
 
     return service.findUserById(id);
   }

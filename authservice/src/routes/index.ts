@@ -15,4 +15,5 @@ router.get('/google/callback', validate(callbackValidation), passportCallbackMid
 
 router.get('/user/me', authMiddleware, getMeController)
 router.get('/user/:id', authMiddleware, validate(getByIdValidation), getByIdController)
+
 export default router;
