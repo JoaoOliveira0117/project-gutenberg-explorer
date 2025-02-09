@@ -1,5 +1,5 @@
 import { Box, CardMedia, Typography } from "@mui/material";
-import Chip from "./Chip";
+import Chip from "../dummies/Chip";
 
 type Props = {
   subjects: string[],

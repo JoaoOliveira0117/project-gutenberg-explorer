@@ -1,20 +1,22 @@
 import { Chip as MuiChip } from "@mui/material";
-import { useState, MouseEvent } from "react";
+import Text from "./Text";
 
 type Props = {
   text: string;
+  textLength?: number;
 }
 
-const Chip: React.FC<Props> = ({ text }) => {
+const Chip: React.FC<Props> = ({ text, textLength = 10 }) => {
   return (
     <MuiChip
-      label={text}
+      label={<Text text={text} length={textLength} sx={{ fontSize: "0.575rem" }} />}
       variant="filled"
       color="primary"
       sx={{
         height: "fit-content",
         fontSize: "10px",
-        padding: "2px"
+        paddingY: "3px",
+        m: "0.05rem",
       }}
     />
   );

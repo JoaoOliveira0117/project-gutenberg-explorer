@@ -1,4 +1,5 @@
 import { CardMedia, Typography } from "@mui/material";
+import Text from "../dummies/Text";
 
 type Props = {
   authors: string[];
@@ -14,9 +15,7 @@ const BookCardAuthors: React.FC<Props> = ({ authors }) => {
       .trim(); 
   })
   return (
-    <Typography variant="body2" sx={{ fontSize: "0.75rem", color: "var(--dark-gray)" }}>
-      {formattedAuthors.join(' & ')}
-    </Typography>
+    <Text text={formattedAuthors.join(" & ")} length={50} variant="body2" sx={{ fontSize: "0.75rem", color: "var(--dark-gray)" }} />
   );
 }
 

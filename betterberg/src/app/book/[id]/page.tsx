@@ -1,5 +1,4 @@
-import Book from "@/components/Book";
-import { Container } from "@mui/material";
+import BookTextContainer from "@/components/BookText/BookTextContainer";
 
 export default async function Page({
   params,
@@ -8,6 +7,6 @@ export default async function Page({
 }) {
   const { id } = (await params)
   return (
-    <Book id={id} />
+    <BookTextContainer id={id} />
   );
 }

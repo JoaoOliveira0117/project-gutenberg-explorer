@@ -28,6 +28,9 @@ export default function UserPill({ email, onLogout }: UserPillProps) {
         color="primary"
         onClick={handleClick}
         sx={{
+          minWidth: "8rem",
+          display: "flex",
+          justifyContent: "start",
           fontSize: "14px",
           padding: "4px",
           cursor: "pointer",

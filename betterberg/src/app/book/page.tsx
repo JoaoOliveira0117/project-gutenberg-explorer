@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Grid2 as Grid, Typography, Card, CardMedia, Autocomplete, TextField, Container, Link, CardContent, IconButton } from "@mui/material";
 import UserPill from "@/components/UserPill";
-import BookCard from "@/components/BookCard";
+import BookCard from "@/components/BookCard/BookCard";
 import SearchInput from "@/components/SearchBooks";
 
 export default function Books() {
@@ -21,12 +21,6 @@ export default function Books() {
 
   return (
     <Container maxWidth="lg">
-      <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", p: 2 }}>
-        <Typography variant="h4" align="center" gutterBottom>
-          Betterberg
-        </Typography>
-        { user && <UserPill email={user.email} onLogout={console.log}/> }
-      </Container>
       <SearchInput onSearch={setSearch}/>
       <Grid container spacing={{ xs: 1, md: 2 }} justifyContent="center" sx={{ mx: "auto", p: 1 }}>
         {books.map((book: any) => (
