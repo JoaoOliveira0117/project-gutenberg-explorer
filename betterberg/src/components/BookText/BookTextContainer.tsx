@@ -4,16 +4,7 @@ import { Container } from "@mui/material";
 import BookText from "./BookText";
 import { useEffect, useState } from "react";
 import BookTextHeader from "./BookTextHeader";
-
-type Book = {
-  id: string;
-  book_id: string;
-  title: string;
-  authors: string[];
-  subjects: string[];
-  tags: string[];
-  language: string;
-}
+import { Book } from "@/types";
 
 type Props = {
   id: string;

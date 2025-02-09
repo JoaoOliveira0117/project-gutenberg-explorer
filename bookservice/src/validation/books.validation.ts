@@ -5,7 +5,8 @@ export const getAllValidation = z.object({
     page: z.coerce.number().int(),
     pageSize: z.coerce.number().int(),
     search: z.string(),
-    fields: z.array(z.string())
+    fields: z.array(z.string()),
+    user_id: z.string()
   }).partial()
 });
 
@@ -14,18 +15,28 @@ export const getByIdValidation = z.object({
     id: z.string()
   }),
   query: z.object({
-    fields: z.string().transform((v, ctx) => 1)
+    fields: z.string().transform((v, ctx) => 1),
+    user_id: z.string()
   }).partial()
 });
 
 export const postFavoriteBookValidation = z.object({
   params: z.object({
-    book_id: z.string()
+    book_id: z.string(),
+    user_id: z.string()
+  })
+});
+
+export const deleteFavoriteBookValidation = z.object({
+  params: z.object({
+    book_id: z.string(),
+    user_id: z.string()
   })
 });
 
 export const postLastSeenBookValidation = z.object({
   params: z.object({
-    book_id: z.string()
+    book_id: z.string(),
+    user_id: z.string()
   })
 });

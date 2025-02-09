@@ -2,16 +2,7 @@ import { ArrowLeft } from "@mui/icons-material";
 import { Box, Button, Container, Typography } from "@mui/material";
 import Link from "next/link";
 import BookTextChips from "./BookTextChips";
-
-type Book = {
-  id: string;
-  book_id: string;
-  title: string;
-  authors: string[];
-  subjects: string[];
-  tags: string[];
-  language: string;
-}
+import { Book } from "@/types";
 
 type Props = {
   book: Book;

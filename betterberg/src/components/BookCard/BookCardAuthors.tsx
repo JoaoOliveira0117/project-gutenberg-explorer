@@ -1,4 +1,3 @@
-import { CardMedia, Typography } from "@mui/material";
 import Text from "../dummies/Text";
 
 type Props = {

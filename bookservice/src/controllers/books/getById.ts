@@ -3,7 +3,7 @@ import BooksController from "./books.controller.js";
 
 class GetById extends BooksController {
   async handle() {
-    const { fields } = this.query as { fields: string[] }
+    const { fields, user_id } = this.query as { fields: string[], user_id: string };
     const { id } = this.params;
 
     const selectFields = fields?.length > 0 ? fields.join(",") : "*";

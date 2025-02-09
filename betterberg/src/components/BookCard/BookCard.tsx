@@ -1,23 +1,12 @@
 import CardContainer from "../dummies/CardContainer";
 import BookCardImage from "./BookCardImage";
-import { Box, Button, Grid2 as Grid, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import BookCardTitle from "./BookCardTitle";
 import BookCardAuthors from "./BookCardAuthors";
 import BookCardChips from "./BookCardChips";
-import { FavoriteBorder } from "@mui/icons-material";
-import Link from "next/link";
 import BookCardReadButton from "./BookCardReadButton";
 import BookCardFavoriteButton from "./BookCardFavoriteButton";
-
-type Book = {
-  id: string;
-  book_id: string;
-  title: string;
-  authors: string[];
-  subjects: string[];
-  tags: string[];
-  language: string;
-}
+import { Book } from "@/types";
 
 type Props = {
   book: Book;
@@ -47,7 +36,7 @@ const BookCard: React.FC<Props> = ({ book }) => {
           <BookCardAuthors authors={book.authors} />
           <BookCardChips language={book.language} subjects={book.subjects} tags={book.tags} />
           <Box sx={{ alignSelf: 'end', marginTop: 'auto', paddingTop: '1rem', display: "flex", flexDirection: "row", gap: 1 }}>
-            <BookCardFavoriteButton favorite />
+            <BookCardFavoriteButton id={book.id} favorite={!!book.user_favorite_books} />
             <BookCardReadButton bookId={book.id} />
           </Box>
         </Box>
