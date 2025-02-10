@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { AnyZodObject, ZodError } from "zod";
+import UnprocessableEntity from "../http/errors/unprocessableEntity.error.js";
+import HttpError from "../http/error.js";
 
 const formatZodError = (err: ZodError) => {
   const formattedErrors = err.issues.map((issue) => 
@@ -17,21 +19,19 @@ const validate = (schema: AnyZodObject) => async (req: Request, res: Response, n
       params: req.params,
     });
     next();
-  } catch (error: unknown) {
-    if (error instanceof ZodError) {
-      return res.status(400).json({ 
-        success: false,
-        message: 'Validation Error',
-        error: {
-          formatted: formatZodError(error as ZodError),
-          raw: {
-            ...error
-          }
-        }
-      });
+  } catch (err: unknown) {
+    if (err instanceof ZodError) {
+      const error = new UnprocessableEntity(
+        "Validation Error",
+        "Zod Error",
+        formatZodError(err as ZodError),
+        err
+      )
+      return next(error)
     }
 
-    res.status(400).json({ error });
+    const error = new HttpError("Unable to validate schema")
+    return next(error);
   }
 }
 

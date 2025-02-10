@@ -8,6 +8,7 @@ import callbackController from "../controllers/callback.controller.js";
 import getMeController from "../controllers/getMe.controller.js";
 import getByIdController from "../controllers/getById.controller.js";
 import updateMeController from "../controllers/updateMe.controller.js";
+import errorHandler from "../middlewares/error.middleware.js";
 
 const router = Router();
 
@@ -17,5 +18,7 @@ router.get('/google/callback', validate(callbackValidation), passportCallbackMid
 router.get('/user/me', authMiddleware, getMeController)
 router.put('/user/me', authMiddleware, validate(updateMeValidation), updateMeController)
 router.get('/user/:id', authMiddleware, validate(getByIdValidation), getByIdController)
+
+router.use(errorHandler);
 
 export default router;

@@ -1,6 +1,7 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "../config/db.types.js";
 import db from "../config/db.js";
+import { Repository } from "../http/repository.js";
 
 export type ProviderRequest = {
   provider_id: string;
@@ -13,10 +14,11 @@ export type ProviderResponse = {
   created_at: string;
 }
 
-export default class ProviderRepository {
+export default class ProviderRepository extends Repository {
   protected db;
 
   constructor(db: SupabaseClient<Database, "public", any>) {
+    super();
     this.db = db.from('providers');
   }
 
@@ -29,7 +31,7 @@ export default class ProviderRepository {
     const { error, data } = await this.db.select().eq('provider_id', query.provider_id).eq('user_id', query.user_id).single();
 
     if (error) {
-      throw error;
+      throw this.handleError(error);
     }
 
     return data;
@@ -39,7 +41,7 @@ export default class ProviderRepository {
     const { error, data } = await this.db.insert(body).select().single();
 
     if (error) {
-      throw error;
+      throw this.handleError(error);
     }
 
     return data;
