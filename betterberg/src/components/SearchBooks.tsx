@@ -1,20 +1,41 @@
+'use client'
+
 import { useState } from "react";
-import { TextField, InputAdornment, Box } from "@mui/material";
+import { TextField, InputAdornment, Box, Skeleton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import useDebounced from "@/hooks/useDebounce";
+import { useBooks } from "@/hooks/useBooks";
 
-export default function SearchInput({ onSearch }: { onSearch: (query: string) => void }) {
-  const [query, setQuery] = useState("");
+export default function SearchInput() {
+  const { setSearchQuery, isLoading } = useBooks();
 
   const throttledSearch = useDebounced((value: string) => {
-    onSearch(value);
+    setSearchQuery(value);
   }, 500);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setQuery(value);
-    throttledSearch(value);
+    throttledSearch(event.target.value);
   };
+
+  if (isLoading) {
+    return (<Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        p: 2,
+      }}
+    >
+      <Skeleton
+        variant="rectangular"
+        width={400}
+        height={56}
+        sx={{
+          borderRadius: 2,
+        }}
+      />
+    </Box>)
+  }
 
   return (
     <Box
@@ -29,7 +50,6 @@ export default function SearchInput({ onSearch }: { onSearch: (query: string) =>
         fullWidth
         variant="outlined"
         placeholder="Search..."
-        value={query}
         onChange={handleChange}
         sx={{
           maxWidth: 400,

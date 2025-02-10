@@ -1,3 +1,4 @@
+import { useBooks } from "@/hooks/useBooks";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { useState } from "react";
@@ -8,16 +9,11 @@ type Props = {
 }
 
 const BookCardFavoriteButton: React.FC<Props> = ({ id, favorite }) => {
-  const [isFavorite, setFavorite] = useState(favorite);
+  const [isFavorite, setIsFavorite] = useState(favorite);
+  const { setFavorite, removeFavorite } = useBooks();
 
   const handleClick = async () => {
-    setFavorite(!isFavorite);
-
-    fetch(`/api/books/${id}/favorite`, {
-      method: isFavorite ? "DELETE" : "PUT",
-    }).then((res) => {
-      if (!res.ok) setFavorite(favorite);
-    })
+    isFavorite ? removeFavorite(id, setIsFavorite) : setFavorite(id, setIsFavorite);
   }
 
   return (

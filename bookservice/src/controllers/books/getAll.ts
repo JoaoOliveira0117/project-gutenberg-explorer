@@ -8,7 +8,7 @@ class GetAllBooks extends BooksController {
 
     const selectFields = fields?.length > 0 ? fields.join(",") : "*";
 
-    let result = this.service.select(`${selectFields},user_favorite_books!left(user_id)`).eq('user_favorite_books.user_id', user_id).range(skip, skip + take)
+    let result = this.service.select(`${selectFields},user_favorite_books!left(book_id)`).eq('user_favorite_books.user_id', user_id).range(skip, skip + take)
 
     if ((search as string)?.trim()) {
       const conditions = [
@@ -26,7 +26,7 @@ class GetAllBooks extends BooksController {
       result = result.or(conditions.join(","));
     }
 
-    return result;
+    return result
   }
 }
 

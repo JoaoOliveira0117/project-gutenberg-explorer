@@ -6,8 +6,7 @@ export type Book = {
   subjects: string[];
   tags: string[];
   language: string;
-  user_favorite_books: { 
-    user_id: string;
+  user_favorite_books: {
     book_id: string;
-  };
+  } | null;
 }
