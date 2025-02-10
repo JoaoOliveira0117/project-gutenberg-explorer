@@ -4,14 +4,13 @@ import FavoritesRepository, { FavoritesRequest } from "../repositories/favorites
 export default class FavoritesService {
   protected repository;
 
-  private constructor(db: any) {
-    this.repository = new FavoritesRepository(db);
+  private constructor(repository: FavoritesRepository) {
+    this.repository = repository;
   }
 
   static async init() {
-    const database = await db();
-
-    return new FavoritesService(database);
+    const favoritesRepository = await FavoritesRepository.init();
+    return new FavoritesService(favoritesRepository);
   }
 
   async addFavorite(favorite: FavoritesRequest) {
@@ -19,6 +18,6 @@ export default class FavoritesService {
   }
 
   async removeFavorite(user_id: string, book_id: string) {
-    return this.repository.removeFavorite(user_id, book_id);
+    return this.repository.removeFavorite({ user_id, book_id });
   }
 }

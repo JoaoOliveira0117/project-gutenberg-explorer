@@ -4,14 +4,13 @@ import BooksRepository from "../repositories/books.repository.js";
 export default class BooksService {
   protected repository;
 
-  private constructor(db: any) {
-    this.repository = new BooksRepository(db);
+  private constructor(repository: BooksRepository) {
+    this.repository = repository;
   }
 
   static async init() {
-    const database = await db();
-
-    return new BooksService(database);
+    const booksRepository = await BooksRepository.init();
+    return new BooksService(booksRepository);
   }
 
   async findAllBooks(user_id: string, fields?: string[], search?: string, page?: number, pageSize?: number) {

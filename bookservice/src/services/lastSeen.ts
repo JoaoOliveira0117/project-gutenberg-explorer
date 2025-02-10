@@ -4,14 +4,13 @@ import LastSeenRepository, { LastSeenRequest } from "../repositories/lastSeen.re
 export default class LastSeenService {
   protected repository;
 
-  private constructor(db: any) {
-    this.repository = new LastSeenRepository(db);
+  private constructor(repository: LastSeenRepository) {
+    this.repository = repository;
   }
 
   static async init() {
-    const database = await db();
-
-    return new LastSeenService(database);
+    const lastSeenRepository = await LastSeenRepository.init();
+    return new LastSeenService(lastSeenRepository);
   }
 
   async addLastSeen(lastSeen: LastSeenRequest) {
