@@ -52,4 +52,14 @@ export default class UserRepository {
 
     return data;
   }
+
+  async updateUserById(id: string, user: Partial<UserRequest>): Promise<UserResponse> {
+    const { error, data } = await this.db.update(user).eq('id', id).single();
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  }
 }

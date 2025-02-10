@@ -43,4 +43,11 @@ export default class UserService {
 
     return userRecord;
   }
+
+  async updateUserById(id: string, user: {
+    username: string,
+    profile_pic: string
+  }) {
+    return this.userRepository.updateUserById(id, user);
+  }
 }

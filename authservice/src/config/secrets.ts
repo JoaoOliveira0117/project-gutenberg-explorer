@@ -18,7 +18,11 @@ export default class Secrets {
   }
 
   static async initialize() {
-    const client = new SecretManagerServiceClient();
+    const client = process.env.GOOGLE_CREDENTIALS ? 
+      new SecretManagerServiceClient({
+        credentials: JSON.parse(Buffer.from(process.env.GOOGLE_CREDENTIALS!, "base64").toString("utf-8"))
+      }) : 
+      new SecretManagerServiceClient(); 
     const [version] = await client.accessSecretVersion({
       name: `projects/${process.env.GCP_PROJECT_ID}/secrets/${process.env.GCP_SECRETS_MANAGER}/versions/latest`,
     });

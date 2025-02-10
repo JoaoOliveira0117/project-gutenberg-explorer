@@ -13,3 +13,10 @@ export const getByIdValidation = z.object({
     id: z.string(),
   })
 })
+
+export const updateMeValidation = z.object({
+  body: z.object({
+    username: z.string(),
+    profile_pic: z.string(),
+  }).partial(),
+})
