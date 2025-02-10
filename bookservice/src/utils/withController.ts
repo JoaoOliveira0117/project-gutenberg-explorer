@@ -1,10 +1,10 @@
-import Controller from "../http/controller";
-import { Request, Response } from "express";
+import Controller from "../http/controller.js";
+import { NextFunction, Request, Response } from "express";
 
-type ControllerConstructor = new (req: Request, res: Response) => Controller;
+type ControllerConstructor = new (req: Request, res: Response, next: NextFunction) => Controller;
 
 const withController = (Controller: ControllerConstructor) => {
-  return (req: Request, res: Response) => new Controller(req, res).execute();
+  return (req: Request, res: Response, next: NextFunction) => new Controller(req, res, next).execute();
 }
 
 export default withController

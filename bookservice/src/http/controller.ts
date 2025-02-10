@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import Rest from "./rest.js";
 
 export default class Controller extends Rest {
-  constructor(req: Request, res: Response) {
-    super(req, res);
+  constructor(req: Request, res: Response, next: NextFunction) {
+    super(req, res, next);
   }
 
   async handle(): Promise<any> {
@@ -17,8 +17,7 @@ export default class Controller extends Rest {
       };
       this.res.send({ result });
     } catch (error: unknown) {
-      console.log(error)
-      this.res.status(500).send({ error });
+      this.next(error);
     }
   }
 }

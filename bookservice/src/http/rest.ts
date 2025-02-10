@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 export default class Rest {
   protected res;
+  protected next;
   public body;
   public query;
   public params;
@@ -9,8 +10,9 @@ export default class Rest {
   public headers;
   public user;
 
-  constructor(req: Request & { user?: any }, res: Response) {
+  constructor(req: Request & { user?: any }, res: Response, next: NextFunction) {
     this.res = res;
+    this.next = next;
     this.body = req.body;
     this.query = req.query;
     this.params = req.params;

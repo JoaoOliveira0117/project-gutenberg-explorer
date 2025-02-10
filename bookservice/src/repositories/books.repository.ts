@@ -2,6 +2,8 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "../config/db.types.js";
 import db from "../config/db.js";
 import { FavoritesRequest } from "./favorites.repository.js";
+import NotFound from "../http/errors/notFound.error.js";
+import { Repository } from "../http/repository.js";
 
 export type BookResponse = {
   id: string;
@@ -17,10 +19,11 @@ export type BookResponse = {
   created_at: string;
 }
 
-export default class BooksRepository {
+export default class BooksRepository extends Repository {
   protected db;
 
   constructor(db: SupabaseClient<Database, "public", any>) {
+    super()
     this.db = db.from('books');
   }
 
@@ -55,7 +58,7 @@ export default class BooksRepository {
     const { error, data } = await result.range(page - 1, page + pageSize).returns<BookResponse[]>();
 
     if (error) {
-      throw error;
+      throw this.handleError(error);
     }
 
     return data;
@@ -71,8 +74,12 @@ export default class BooksRepository {
 
     const { error, data } = await result.returns<BookResponse>().single();
 
+    if (!data) {
+      throw new NotFound("Book not found", "Books Repository")
+    }
+
     if (error) {
-      throw error;
+      throw this.handleError(error);
     }
 
     return data;
@@ -88,7 +95,7 @@ export default class BooksRepository {
      .returns<BookResponse[]>();
 
     if (error) {
-      throw error;
+      throw this.handleError(error);
     }
 
     return data;
@@ -104,7 +111,7 @@ export default class BooksRepository {
      .returns<BookResponse[]>();
 
     if (error) {
-      throw error;
+      throw this.handleError(error);
     }
 
     return data;

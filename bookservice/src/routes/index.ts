@@ -6,6 +6,7 @@ import getByIdController from "../controllers/books/getById.controller.js";
 import putFavoriteBookController from "../controllers/favorites/putFavoriteBook.controller.js";
 import deleteFavoriteBookController from "../controllers/favorites/deleteFavoriteBook.controller.js";
 import putLastSeenController from "../controllers/lastseen/putLastSeen.controller.js";
+import errorHandler from "../middlewares/error.middleware.js";
 
 const router = Router();
 const bookRouter = Router({ mergeParams: true });
@@ -23,5 +24,7 @@ bookRouter.use("/:book_id", favoriteRouter);
 bookRouter.use("/:book_id", lastSeenRouter);
 
 router.use("/:user_id/books", validate(userValidation), bookRouter)
+
+router.use(errorHandler);
 
 export default router;
