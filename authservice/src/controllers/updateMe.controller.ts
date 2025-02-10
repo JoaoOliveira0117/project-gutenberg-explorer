@@ -4,9 +4,9 @@ import AuthController from "./auth.controller.js";
 /**
  * @openapi
  * /api/user/me:
- *  get:
+ *  put:
  *    tags: [User]
- *    summary: Get current user details
+ *    summary: Update current user details
  *    requestBody:
  *      required: true
  *      content:
