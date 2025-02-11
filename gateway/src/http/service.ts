@@ -8,8 +8,7 @@ export default class Service {
     this.baseUrl = baseUrl;
     this.client = got.extend({
       prefixUrl: baseUrl,
-      responseType: 'json',
-      resolveBodyOnly: true,
+      responseType: 'json'
     });
   }
 }

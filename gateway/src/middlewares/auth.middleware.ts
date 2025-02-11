@@ -3,7 +3,6 @@ import Unauthorized from '../http/errors/unauthorized.error.js';
 import AuthService from '../services/auth.js';
 
 const authMiddleware = async (
-  err: Error,
   req: Request,
   res: Response,
   next: NextFunction
@@ -13,7 +12,7 @@ const authMiddleware = async (
 
     const authService = new AuthService();
 
-    (req as Request & { user: any }).user = await authService.getUserMe(token);
+    (req as Request & { user: any }).user = (await authService.getUserMe(token) as any).result;
 
     next();
   } catch (err: unknown) {

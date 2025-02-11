@@ -8,8 +8,9 @@ const errorHandler = (err: any, req: Request, res: Response, next: NextFunction)
 
   console.error(err);
 
-  if (err instanceof HttpError) {
-    return res.status(err.statusCode).json(err.toJson());
+  if (err?.error?.response?.body) {
+    const errorBody = err.error.response.body
+    return res.status(errorBody.status).json(errorBody);
   }
 
   res.status(errStatus).json({

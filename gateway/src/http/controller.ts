@@ -3,7 +3,7 @@ import Rest from "./rest.js";
 
 export default class Controller extends Rest {
   constructor(req: Request, res: Response, next: NextFunction) {
-    super(req, res);
+    super(req, res, next);
   }
 
   async handle(): Promise<any> {
@@ -13,12 +13,13 @@ export default class Controller extends Rest {
   async execute(): Promise<void> {
     try {
       const result = await this.handle() || {
-        success: true
+        result: {
+          success: true
+        }
       };
-      this.res.send({ result });
+      this.res.send(result);
     } catch (error: unknown) {
-      console.log(error)
-      this.res.status(500).send({ error });
+      this.next({ error });
     }
   }
 }

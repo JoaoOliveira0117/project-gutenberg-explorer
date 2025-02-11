@@ -2,7 +2,7 @@ import Service from "../http/service.js";
 
 export default class BooksService extends Service {
   constructor() {
-    super(process.env.BOOK_SERVICE!);
+    super(process.env.BOOKS_SERVICE!);
   }
 
   async getBooks(query: { search?: string, fields?: string[], skip: number, take: number }, user_id: string) {
@@ -12,9 +12,9 @@ export default class BooksService extends Service {
     searchParams.skip = String(skip);
     searchParams.take = String(take);
     if (search) searchParams.search = search;
-    if (fields && fields.length > 0) searchParams.fields = fields.join(",");
+    //if (fields) searchParams.fields = typeof fields === "string" ? fields : fields?.join("&fields=");
 
-    const response = this.client.get(`api/${user_id}/books`, { searchParams })
+    const response = this.client.get(`api/${user_id}/books?fields=id&fields=book_id`, { searchParams });
 
     return response.json();
   }

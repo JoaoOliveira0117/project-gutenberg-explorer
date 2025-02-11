@@ -14,10 +14,8 @@ import AuthController from "./auth.controller.js";
  *        description: Internal server error
  */
 class GetMeController extends AuthController {
-  async handle() {   
-    const service = this.AuthService;
-
-    return service.getUserMe(this.token);
+  async handle() {
+    return this.user;
   }
 }
 
