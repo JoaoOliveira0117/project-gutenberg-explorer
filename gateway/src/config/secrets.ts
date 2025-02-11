@@ -1,13 +1,7 @@
 import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 
 type SecretsType = {
-  DB_URL: string;
-  DB_KEY: string;
-  GOOGLE_AUTH_CLIENT_ID: string;
-  GOOGLE_AUTH_CLIENT_SECRET: string;
-  JWT_SECRET: string;
-  APP_URL: string;
-  API_URL: string;
+  API_KEY: string;
 } 
 
 export default class Secrets {

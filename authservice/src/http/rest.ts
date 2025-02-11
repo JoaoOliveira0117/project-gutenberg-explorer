@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 export default class Rest {
   protected res;
@@ -8,8 +8,9 @@ export default class Rest {
   public method;
   public headers;
   public user;
+  public next;
 
-  constructor(req: Request & { user?: any }, res: Response) {
+  constructor(req: Request & { user?: any }, res: Response, next: NextFunction) {
     this.res = res;
     this.body = req.body;
     this.query = req.query;
@@ -17,6 +18,7 @@ export default class Rest {
     this.method = req.method;
     this.headers = req.headers;
     this.user = req.user;
+    this.next = next;
   }
 
   getMappedQuery(map: Record<string, (value: string) => Record<string, unknown>>) {

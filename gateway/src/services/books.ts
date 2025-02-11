@@ -14,7 +14,10 @@ export default class BooksService extends Service {
     if (search) searchParams.search = search;
     if (fields) searchParams.fields = typeof fields === "string" ? fields : fields?.join(",");
 
-    const response = this.client.get(`api/${user_id}/books`, { searchParams });
+    const response = this.client.get(`api/${user_id}/books`, {
+      headers: await this.getHeaders(),
+      searchParams 
+    });
 
     return response.json();
   }
@@ -23,25 +26,34 @@ export default class BooksService extends Service {
     const searchParams: Record<string, string> = {};
 
     if (fields) searchParams.fields = typeof fields === "string" ? fields : fields?.join(",");
-    const response = this.client.get(`api/${user_id}/books/${id}`, { searchParams })
+    const response = this.client.get(`api/${user_id}/books/${id}`, {
+      headers: await this.getHeaders(),
+      searchParams
+    })
 
     return response.json();
   }
 
   async putFavoriteBook(id: string, user_id: string) {
-    const response = this.client.put(`api/${user_id}/books/${id}/favorite`)
+    const response = this.client.put(`api/${user_id}/books/${id}/favorite`, {
+      headers: await this.getHeaders()
+    })
 
     return response.json();
   }
 
   async deleteFavoriteBook(id: string, user_id: string) {
-    const response = this.client.delete(`api/${user_id}/books/${id}/favorite`)
+    const response = this.client.delete(`api/${user_id}/books/${id}/favorite`, {
+      headers: await this.getHeaders()
+    })
 
     return response.json();
   }
 
   async putLastSeenBook(id: string, user_id: string) {
-    const response = this.client.put(`api/${user_id}/books/${id}/last-seen`)
+    const response = this.client.put(`api/${user_id}/books/${id}/last-seen`, {
+      headers: await this.getHeaders()
+    })
 
     return response.json();
   }

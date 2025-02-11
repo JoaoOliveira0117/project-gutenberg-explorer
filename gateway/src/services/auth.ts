@@ -7,9 +7,7 @@ export default class AuthService extends Service {
 
   async getUserMe(token: string) {
     const response = this.client.get("api/user/me", {
-      headers: {
-        Authorization: token,
-      }
+      headers: await this.getHeaders(token)
     })
 
     return response.json();
@@ -17,9 +15,7 @@ export default class AuthService extends Service {
 
   async getUserById(id: string, token: string) {
     const response = this.client.get("api/user/" + id, {
-      headers: {
-        Authorization: token,
-      }
+      headers: await this.getHeaders(token)
     })
 
     return response.json();
@@ -27,9 +23,7 @@ export default class AuthService extends Service {
 
   async updateUserMe(body: { username: string, profile_pic: string }, token: string) {
     const response = this.client.put("api/user/me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: await this.getHeaders(token),
       json: body,
     });
 

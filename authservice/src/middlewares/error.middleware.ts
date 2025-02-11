@@ -13,9 +13,9 @@ const errorHandler = (err: any, req: Request, res: Response, next: NextFunction)
   }
 
   res.status(errStatus).json({
-      success: false,
-      status: errStatus,
-      message: errMsg,
+    success: false,
+    status: errStatus,
+    message: errMsg,
   })
 }
 

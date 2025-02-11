@@ -8,6 +8,7 @@ type SecretsType = {
   JWT_SECRET: string;
   APP_URL: string;
   API_URL: string;
+  API_KEY: string;
 } 
 
 export default class Secrets {
