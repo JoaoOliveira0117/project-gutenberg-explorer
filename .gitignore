@@ -125,7 +125,6 @@ venv.bak/
 dmypy.json
 serviceAccountKey.json
 
-deploy.sh
 deploy_user_auth.sh
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.

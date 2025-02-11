@@ -1,17 +1,11 @@
-import json
-from dotenv import load_dotenv
 from src.from_pgcatalog_csv import from_pgcatalog_csv
-from src.publisher_client import publish
-from src.config import get_env
 from src.logs import log
 from src.db import initialize_client
+from src.secrets import access_secret
 
-load_dotenv()
-config = get_env()
-project_id = config.get("PROJECT_ID")
-batch_size = int(config.get("BATCH_SIZE", 500))  # Default to 500 if not set
+batch_size = 500
 
-db = initialize_client(config.get("DB_URL"), config.get("DB_KEY"))
+db = initialize_client(access_secret("DB_URL"), access_secret("DB_KEY"))
 
 def publish_books(event, context):
     """Google Cloud Function triggered by Pub/Sub to upsert books in batches."""

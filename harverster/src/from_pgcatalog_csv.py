@@ -1,6 +1,5 @@
 import pandas as pd
 from .logs import log
-import math
 
 csv_url = "https://www.gutenberg.org/cache/epub/feeds/pg_catalog.csv"
 
