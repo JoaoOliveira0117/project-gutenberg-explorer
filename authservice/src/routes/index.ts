@@ -9,16 +9,20 @@ import getMeController from "../controllers/getMe.controller.js";
 import getByIdController from "../controllers/getById.controller.js";
 import updateMeController from "../controllers/updateMe.controller.js";
 import errorHandler from "../middlewares/error.middleware.js";
+import { accessMiddleware } from "../middlewares/access.middleware.js";
 
 const router = Router();
 
 router.get('/google/redirect', validate(redirectValidation), passportMiddleware, redirectController);
 router.get('/google/callback', validate(callbackValidation), passportCallbackMiddleware, callbackController);
 
-router.get('/user/me', authMiddleware, getMeController)
-router.put('/user/me', authMiddleware, validate(updateMeValidation), updateMeController)
-router.get('/user/:id', authMiddleware, validate(getByIdValidation), getByIdController)
+const userRouter = Router()
 
+userRouter.get('/me', authMiddleware, getMeController)
+userRouter.put('/me', authMiddleware, validate(updateMeValidation), updateMeController)
+userRouter.get('/:id', authMiddleware, validate(getByIdValidation), getByIdController)
+
+router.use('/user', accessMiddleware, userRouter)
 router.use(errorHandler);
 
 export default router;

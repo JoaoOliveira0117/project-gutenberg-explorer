@@ -18,7 +18,7 @@ app.use(express.json())
 Passport.initialize();
 
 app.use('/api-docs', swaggerAuthMiddleware, ...initializeSwagger())
-app.use("/api", accessMiddleware, router);
+app.use("/api", router);
 
 const port = process.env.PORT || 9000;
 
