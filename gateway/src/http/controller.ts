@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import Rest from "./rest.js";
 
 export default class Controller extends Rest {
-  constructor(req: Request, res: Response) {
+  constructor(req: Request, res: Response, next: NextFunction) {
     super(req, res);
   }
 

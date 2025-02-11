@@ -1,26 +1,20 @@
 import { NextFunction, Request, Response } from 'express';
-import { decodeToken } from '../utils/security.js';
 import Unauthorized from '../http/errors/unauthorized.error.js';
+import AuthService from '../services/auth.js';
 
-export const authMiddleware = async (
+const authMiddleware = async (
+  err: Error,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
+    const token = req.headers.authorization!;
 
-    if (!token) {
-      throw new Unauthorized(
-        'No token provided', 
-        "Auth Error",
-        ["No token provided"]
-      );
-    }
+    const authService = new AuthService();
 
-    const decoded = await decodeToken(token);
+    (req as Request & { user: any }).user = await authService.getUserMe(token);
 
-    req.user = decoded;
     next();
   } catch (err: unknown) {
     const error = new Unauthorized(
@@ -32,3 +26,5 @@ export const authMiddleware = async (
     next(error);
   }
 };
+
+export default authMiddleware;

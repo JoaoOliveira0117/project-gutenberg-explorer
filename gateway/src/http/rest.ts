@@ -8,6 +8,7 @@ export default class Rest {
   public method;
   public headers;
   public user;
+  public token;
 
   constructor(req: Request & { user?: any }, res: Response) {
     this.res = res;
@@ -17,6 +18,7 @@ export default class Rest {
     this.method = req.method;
     this.headers = req.headers;
     this.user = req.user;
+    this.token = req.headers.authorization || "";
   }
 
   getMappedQuery(map: Record<string, (value: string) => Record<string, unknown>>) {
