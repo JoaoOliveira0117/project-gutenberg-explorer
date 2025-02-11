@@ -32,8 +32,8 @@ export default class BooksRepository extends Repository {
     return new BooksRepository(database);
   }
 
-  async findAllBooks(user_id: string, fields?: string[], search?: string, page = 1, pageSize = 25): Promise<BookResponse[]> {
-    const selectFields = fields && fields?.length > 0 ? fields.join(",") : "*";
+  async findAllBooks(user_id: string, fields?: string, search?: string, page = 1, pageSize = 25): Promise<BookResponse[]> {
+    const selectFields = fields || "*";
 
     let result = this.db
       .select(`user_favorite_books!left(book_id), ${selectFields}`)

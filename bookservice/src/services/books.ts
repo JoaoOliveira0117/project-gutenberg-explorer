@@ -13,7 +13,7 @@ export default class BooksService {
     return new BooksService(booksRepository);
   }
 
-  async findAllBooks(user_id: string, fields?: string[], search?: string, page?: number, pageSize?: number) {
+  async findAllBooks(user_id: string, fields?: string, search?: string, page?: number, pageSize?: number) {
     return this.repository.findAllBooks(user_id, fields, search, page, pageSize);
   }
 

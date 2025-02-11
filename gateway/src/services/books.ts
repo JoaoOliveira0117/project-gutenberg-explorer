@@ -5,16 +5,16 @@ export default class BooksService extends Service {
     super(process.env.BOOKS_SERVICE!);
   }
 
-  async getBooks(query: { search?: string, fields?: string[], skip: number, take: number }, user_id: string) {
+  async getBooks(query: { search?: string, fields?: string | string[], skip: number, take: number }, user_id: string) {
     const { search, fields, skip, take } = query;
     const searchParams: Record<string, string> = {};
 
     searchParams.skip = String(skip);
     searchParams.take = String(take);
     if (search) searchParams.search = search;
-    //if (fields) searchParams.fields = typeof fields === "string" ? fields : fields?.join("&fields=");
+    if (fields) searchParams.fields = typeof fields === "string" ? fields : fields?.join(",");
 
-    const response = this.client.get(`api/${user_id}/books?fields=id&fields=book_id`, { searchParams });
+    const response = this.client.get(`api/${user_id}/books`, { searchParams });
 
     return response.json();
   }
@@ -22,7 +22,7 @@ export default class BooksService extends Service {
   async getBookById(id: string, user_id: string, fields?: string[]) {
     const searchParams: Record<string, string> = {};
 
-    if (fields && fields.length > 0) searchParams.fields = fields.join(",");
+    if (fields) searchParams.fields = typeof fields === "string" ? fields : fields?.join(",");
     const response = this.client.get(`api/${user_id}/books/${id}`, { searchParams })
 
     return response.json();
