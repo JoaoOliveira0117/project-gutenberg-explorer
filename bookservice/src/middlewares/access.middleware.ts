@@ -8,16 +8,9 @@ export const accessMiddleware = async (
   next: NextFunction
 ) => {
   try {
-    if (req.path.startsWith('/api-docs')) {
-      next();
-      return;
-    }
-
     const apiKey = req.header("x-api-key");
-    const secrets = await Secrets.initialize()
+    const secrets = await Secrets.getInstance()
     const API_KEY = await secrets.getSecret('API_KEY');
-
-    console.log(req.headers)
 
     if (!apiKey || apiKey !== API_KEY) {
       throw new Unauthorized(

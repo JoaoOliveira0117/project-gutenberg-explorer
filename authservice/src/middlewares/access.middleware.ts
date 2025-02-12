@@ -15,7 +15,7 @@ export const accessMiddleware = async (
     }
 
     const apiKey = req.header("x-api-key");
-    const secrets = await Secrets.initialize()
+    const secrets = await Secrets.getInstance()
     const API_KEY = await secrets.getSecret('API_KEY');
 
     if (!apiKey || apiKey !== API_KEY) {

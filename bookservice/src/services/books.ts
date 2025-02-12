@@ -1,4 +1,4 @@
-import BooksRepository from "../repositories/books.repository.js";
+import BooksRepository, { BookRequest } from "../repositories/books.repository.js";
 
 export default class BooksService {
   protected repository;
@@ -34,5 +34,9 @@ export default class BooksService {
 
   async findLastSeenBooks(user_id: string, fields?: string) {
     return this.repository.findLastSeenBooks(user_id, fields);
+  }
+
+  async updateBookById(user_id: string, book_id: string, body: Partial<BookRequest>, fields?: string) {
+    return this.repository.updateBookById(user_id, book_id, body, fields);
   }
 }

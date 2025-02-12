@@ -16,7 +16,7 @@ export default class Service {
 
   private async getApiKeySecret() {
     if (this.apiKeySecret) return this.apiKeySecret;
-    this.apiKeySecret = (await Secrets.initialize()).getSecret('API_KEY');
+    this.apiKeySecret = (await Secrets.getInstance()).getSecret('API_KEY');
     return this.apiKeySecret;
   }
 

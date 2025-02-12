@@ -5,7 +5,7 @@ import { FavoritesRequest } from "./favorites.repository.js";
 import NotFound from "../http/errors/notFound.error.js";
 import { Repository } from "../http/repository.js";
 
-export type BookResponse = {
+export type BookRequest = {
   id: string;
   book_id: string;
   title: string;
@@ -15,6 +15,10 @@ export type BookResponse = {
   locc: string;
   subjects: string[];
   tags: string[];
+  book_url?: string;
+}
+
+export type BookResponse = BookRequest & {
   user_favorite_books: FavoritesRequest;
   created_at: string;
 }
@@ -141,6 +145,23 @@ export default class BooksRepository extends Repository {
      .eq('user_last_seen_books.user_id', user_id)
      .limit(5)
      .returns<BookResponse[]>();
+
+    if (error) {
+      throw this.handleError(error);
+    }
+
+    return data;
+  }
+
+  async updateBookById(user_id: string, book_id: string, body: Partial<BookRequest>, fields?: string) {
+    await this.findBookById(book_id, user_id);
+    const selectFields = fields || "*";
+
+    const { error, data } = await this.db
+      .update(body)
+      .eq('id', book_id)
+      .select(`user_favorite_books!left(book_id), ${selectFields}`)
+      .single()
 
     if (error) {
       throw this.handleError(error);

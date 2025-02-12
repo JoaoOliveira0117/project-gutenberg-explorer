@@ -2,7 +2,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import Secrets from '../config/secrets.js';
 
 export async function decodeToken(value: string): Promise<JwtPayload | string> {
-  const secrets = await Secrets.initialize();
+  const secrets = await Secrets.getInstance();
 
   if (!secrets)
     throw Error('Secrets not found (security.ts - generateToken)');
@@ -11,7 +11,7 @@ export async function decodeToken(value: string): Promise<JwtPayload | string> {
 }
 
 export async function generateToken(user: { provider_id: string, email: string }): Promise<string> {
-  const secrets = await Secrets.initialize();
+  const secrets = await Secrets.getInstance();
 
   if (!secrets)
     throw Error('Secrets not found (security.ts - generateToken)');

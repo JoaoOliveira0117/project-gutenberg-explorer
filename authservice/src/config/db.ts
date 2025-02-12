@@ -3,7 +3,7 @@ import { Database } from "./db.types.js";
 import Secrets from "./secrets.js";
 
 const db = async () => {
-  const secrets = await Secrets.initialize()
+  const secrets = await Secrets.getInstance()
   return createClient<Database>(secrets.getSecret("DB_URL"), secrets.getSecret("DB_KEY"));
 }
 

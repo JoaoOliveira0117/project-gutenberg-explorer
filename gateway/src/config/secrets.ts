@@ -5,13 +5,15 @@ type SecretsType = {
 } 
 
 export default class Secrets {
+  private static instance: Secrets;
   private secrets;
+  private client = null;
 
   private constructor(secrets: SecretsType) {
     this.secrets = secrets;
   }
 
-  static async initialize() {
+  private static async initialize() {
     const client = process.env.GOOGLE_CREDENTIALS ? 
       new SecretManagerServiceClient({
         credentials: JSON.parse(Buffer.from(process.env.GOOGLE_CREDENTIALS!, "base64").toString("utf-8"))
@@ -27,6 +29,14 @@ export default class Secrets {
       APP_URL: process.env.APP_URL,
       API_URL: process.env.API_URL,
     });
+  }
+
+  static async getInstance(): Promise<Secrets> {
+    if (!this.instance) {
+      this.instance = await Secrets.initialize();
+    }
+
+    return this.instance;
   }
 
   getSecret(name: keyof typeof this.secrets) {

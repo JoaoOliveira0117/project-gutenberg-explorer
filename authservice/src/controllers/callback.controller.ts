@@ -42,7 +42,7 @@ class CallbackController extends AuthController {
 
   async execute(): Promise<void> {
     try {
-      const secrets = await Secrets.initialize();
+      const secrets = await Secrets.getInstance();
       const token = await this.handle() || ''
 
       this.res.redirect(`${secrets.getSecret("APP_URL")}/?token=${token}`);

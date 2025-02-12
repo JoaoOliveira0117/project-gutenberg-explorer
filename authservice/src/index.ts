@@ -4,13 +4,9 @@ import cors from "cors";
 import router from "./routes/index.js";
 import { Passport } from "./config/passport.js";
 import { initializeSwagger } from "./config/swagger.js";
-import Secrets from "./config/secrets.js";
 import { swaggerAuthMiddleware } from "./middlewares/swaggerAuth.middleware.js";
-import { accessMiddleware } from "./middlewares/access.middleware.js";
 
 const app = express()
-
-Secrets.initialize()
 
 app.use(cors())
 app.use(express.json())

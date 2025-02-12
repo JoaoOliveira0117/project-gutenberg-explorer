@@ -27,7 +27,7 @@ export class GoogleStrategy extends Strategy {
   }
 
   public static async initialize() {
-    const secrets = await Secrets.initialize()
+    const secrets = await Secrets.getInstance()
 
     const clientId = secrets.getSecret("GOOGLE_AUTH_CLIENT_ID");
     const clientSecret = secrets.getSecret("GOOGLE_AUTH_CLIENT_SECRET");
