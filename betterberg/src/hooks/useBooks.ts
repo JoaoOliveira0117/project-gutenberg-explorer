@@ -1,4 +1,4 @@
-import BooksContext from "@/context/books.context";
+import { BooksContext } from "@/context/books.provider";
 import { useContext } from "react";
 
 export function useBooks() {

@@ -9,4 +9,5 @@ export type Book = {
   user_favorite_books: {
     book_id: string;
   } | null;
+  book_url: string | null;
 }
