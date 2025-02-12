@@ -6,7 +6,7 @@ export default function Login() {
   const router = useRouter()
 
   const handleClick = async () => {
-    router.push('http://localhost:9000/api/google/redirect')
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}/api/redirect`)
   }
 
   return (

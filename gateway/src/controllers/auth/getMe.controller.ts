@@ -15,7 +15,9 @@ import AuthController from "./auth.controller.js";
  */
 class GetMeController extends AuthController {
   async handle() {
-    return this.user;
+    return {
+      result: this.user
+    };
   }
 }
 

@@ -64,8 +64,40 @@ export default class BooksRepository extends Repository {
     return data;
   }
 
-  async findBookById(id: string, user_id: string, fields?: string[]): Promise<BookResponse> {
-    const selectFields = fields && fields?.length > 0 ? fields.join(",") : "*";
+  async findAllFavoriteBooks(user_id: string, fields?: string, page = 1, pageSize = 25): Promise<BookResponse[]> {
+    const selectFields = fields || "*";
+
+    let result = this.db
+      .select(`user_favorite_books!right(book_id), ${selectFields}`)
+      .eq('user_favorite_books.user_id', user_id)
+
+    const { error, data } = await result.range(page - 1, page + pageSize).returns<BookResponse[]>();
+
+    if (error) {
+      throw this.handleError(error);
+    }
+
+    return data;
+  }
+  
+  async findAllLastSeenBooks(user_id: string, fields?: string, page = 1, pageSize = 25): Promise<BookResponse[]> {
+    const selectFields = fields || "*";
+
+    let result = this.db
+      .select(`user_last_seen_books!right(book_id), ${selectFields}`)
+      .eq('user_last_seen_books.user_id', user_id)
+
+    const { error, data } = await result.range(page - 1, page + pageSize).returns<BookResponse[]>();
+
+    if (error) {
+      throw this.handleError(error);
+    }
+
+    return data;
+  }
+
+  async findBookById(id: string, user_id: string, fields?: string): Promise<BookResponse> {
+    const selectFields = fields || "*";
 
     let result = this.db
       .select(`user_favorite_books!left(book_id), ${selectFields}`)
@@ -85,8 +117,8 @@ export default class BooksRepository extends Repository {
     return data;
   }
 
-  async findFavoriteBooks(user_id: string, fields?: string[], page = 1, pageSize = 25) {
-    const selectFields = fields && fields?.length > 0? fields.join(",") : "*";
+  async findFavoriteBooks(user_id: string, fields?: string, page = 1, pageSize = 25) {
+    const selectFields = fields || "*";
 
     const { error, data } = await this.db
      .select(`user_favorite_books!right(book_id), ${selectFields}`)
@@ -101,8 +133,8 @@ export default class BooksRepository extends Repository {
     return data;
   }
 
-  async findLastSeenBooks(user_id: string, fields?: string[]) {
-    const selectFields = fields && fields?.length > 0? fields.join(",") : "*";
+  async findLastSeenBooks(user_id: string, fields?: string) {
+    const selectFields = fields || "*";
 
     const { error, data } = await this.db
      .select(`user_last_seen_books!right(book_id), ${selectFields}`)

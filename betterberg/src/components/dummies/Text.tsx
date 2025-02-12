@@ -1,23 +1,37 @@
-import { Tooltip, Typography, TypographyTypeMap } from "@mui/material";
+import React from "react";
+import TextTooltip from "./TextTooltip";
 
-type Props = TypographyTypeMap['props'] & {
+type TextComponents = 'p' | 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+
+type Props = {
   text: string;
   length?: number;
+  className?: string;
+  as?: TextComponents;
 }
 
-const Text: React.FC<Props> = ({ text, length, ...rest }: Props) => {
+const TextComponent: React.FC<{ 
+  as: TextComponents, 
+  className?: string;
+  children: string | React.ReactNode
+}> = (props) => {
+  return React.createElement(props.as, props);
+}
+
+const Text: React.FC<Props> = ({ text, length, as, className }: Props) => {
   const formattedTitle = length && text.length > length ? text.slice(0, length - 3) + "..." : text;
   return (
     length && text.length > length ? 
-      <Tooltip title={text} placement="top">
-        <Typography variant="h6" sx={{ fontWeight: 600, fontSize: "0.85rem" }} {...rest}>
+      <TextTooltip text={
+        <TextComponent as={as || 'p'} className={className}>
           {formattedTitle}
-        </Typography>
-      </Tooltip> 
+        </TextComponent>  
+      } 
+      content={text} />
     : 
-      <Typography variant="h6" sx={{ fontWeight: 600, fontSize: "0.85rem" }} {...rest}>
-        {formattedTitle}
-      </Typography>
+      <TextComponent as={as || 'p'} className={className}>
+        {text}
+      </TextComponent>
   );
 }
 

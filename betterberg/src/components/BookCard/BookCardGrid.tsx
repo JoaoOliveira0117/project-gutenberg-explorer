@@ -7,6 +7,7 @@ import BookCardSkeleton from "./BookCardSkeleton";
 import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { getAllBooks } from "@/services/booksApi";
+import NewBookCard from "../newBookCard";
 
 type Props = {}
 
@@ -41,30 +42,11 @@ const BookCardGrid: React.FC<Props> = () => {
 
   return (
     <Grid container spacing={{ xs: 1, md: 2 }} justifyContent="center" sx={{ mx: "auto", p: 1 }}>
-      {
-        isLoading && books.length === 0 && Array.from({ length: 12 }).map((_, index) => (
-          <Grid key={index} size={{ xs: 8, sm: 6, md: 4 }}>
-            <BookCardSkeleton />
-          </Grid>
-        ))
-      }
-      {
-        !isLoading && books.map((book: any) => (
-          <Grid key={book.id} size={{ xs: 8, sm: 6, md: 4 }}>
-            <BookCard book={book} />
-          </Grid>
-        ))
-      }
-      {
-        !isLoading && isFetching && books.length > 0 && Array.from({ length: 4 }).map((_, index) => (
-          <Grid key={index} size={{ xs: 8, sm: 6, md: 4 }}>
-            <BookCardSkeleton />
-          </Grid>
-        ))
-      }
-      {
-        !isFetching && hasMore && <div ref={ref}></div>
-      }
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+        {books.map((book) => (
+          <NewBookCard key={book.id} book={book} onToggleFavorite={console.log} />
+        ))}
+      </div>
     </Grid>
   );
 }

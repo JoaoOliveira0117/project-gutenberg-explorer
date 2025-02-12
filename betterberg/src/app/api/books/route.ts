@@ -21,8 +21,12 @@ export async function GET(req: NextRequest) {
       ...(pageSize ? { pageSize } : {}),
       user_id: userId
     })
-    console.log(`http://localhost:3000/api/books?${query.toString()}`)
-    const response = await fetch(`http://localhost:3000/api/books?${query.toString()}`)
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/books?${query.toString()}`, {
+      headers: {
+        'Authorization': 'Bearer ' + cookieStore.get('token')?.value,
+      }
+    })
 
     const data = await response.json()
     return NextResponse.json(data);

@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const response = await fetch(`http://localhost:9000/api/user/me`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/me`, {
       headers: {
         'Authorization': 'Bearer ' + token,
       }

@@ -16,6 +16,24 @@ export const getAllValidation = z.object({
   }).partial()
 });
 
+export const getAllFavoritesValidation = z.object({
+  query: z.object({
+    page: z.coerce.number().int(),
+    pageSize: z.coerce.number().int(),
+    fields: z.string(),
+    user_id: z.string()
+  }).partial()
+});
+
+export const getAllLastSeenValidation = z.object({
+  query: z.object({
+    page: z.coerce.number().int(),
+    pageSize: z.coerce.number().int(),
+    fields: z.string(),
+    user_id: z.string()
+  }).partial()
+});
+
 export const getByIdValidation = z.object({
   params: z.object({
     id: z.string(),

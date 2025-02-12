@@ -8,7 +8,7 @@ export default async function loginMiddleware(request: NextRequest) {
     const cookieStore = await cookies()
 
     
-    const response = await fetch(`http://localhost:9000/api/user/me`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/me`, {
       headers: {
         'Authorization': 'Bearer ' + queryToken,
       }
@@ -21,7 +21,8 @@ export default async function loginMiddleware(request: NextRequest) {
     const data = await response.json()
 
     cookieStore.set('token', queryToken)
-    cookieStore.set('user_id', data.result.id)
+    cookieStore.set('user_id', data.id)
+    
     return NextResponse.redirect(new URL('/', request.url))
   }
 }

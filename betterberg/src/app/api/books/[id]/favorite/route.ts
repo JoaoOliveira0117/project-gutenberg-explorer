@@ -7,8 +7,11 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const userId = cookieStore.get('user_id')?.value;
 
   try {
-    const response = await fetch(`http://localhost:3000/api/books/${id}/${userId}/favorite`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${id}/${userId}/favorite`, {
       method: "PUT",
+      headers: {
+        'Authorization': 'Bearer ' + cookieStore.get('token')?.value,
+      }
     })
 
     if(!response.ok) {
@@ -28,8 +31,11 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
   const userId = cookieStore.get('user_id')?.value;
 
   try {
-    const response = await fetch(`http://localhost:3000/api/books/${id}/${userId}/favorite`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${id}/${userId}/favorite`, {
       method: "DELETE",
+      headers: {
+        'Authorization': 'Bearer ' + cookieStore.get('token')?.value,
+      }
     })
 
     if(!response.ok) {
