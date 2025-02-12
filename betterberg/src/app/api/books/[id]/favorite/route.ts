@@ -4,10 +4,9 @@ import { NextRequest, NextResponse } from "next/server";
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const cookieStore = await cookies();
-  const userId = cookieStore.get('user_id')?.value;
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${id}/${userId}/favorite`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${id}/favorite`, {
       method: "PUT",
       headers: {
         'Authorization': 'Bearer ' + cookieStore.get('token')?.value,
@@ -28,10 +27,9 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const cookieStore = await cookies();
-  const userId = cookieStore.get('user_id')?.value;
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${id}/${userId}/favorite`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${id}/favorite`, {
       method: "DELETE",
       headers: {
         'Authorization': 'Bearer ' + cookieStore.get('token')?.value,

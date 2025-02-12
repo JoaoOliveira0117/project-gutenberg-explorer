@@ -10,8 +10,17 @@
   --dark-gray: #5D5F71;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
+  min-width: 100%;
 }
 
 @layer base {

@@ -1,13 +1,12 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { Grid2 as Grid } from "@mui/material";
-import BookCard from "./BookCard";
 import { useBooks } from "@/hooks/useBooks";
-import BookCardSkeleton from "./BookCardSkeleton";
 import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { getAllBooks } from "@/services/booksApi";
-import NewBookCard from "../newBookCard";
+import Card from "./Card";
 
 type Props = {}
 
@@ -15,7 +14,8 @@ const BookCardGrid: React.FC<Props> = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const { ref, inView } = useInView();
-  const { books, isLoading, isFetching, searchQuery, setBooks } = useBooks();
+  const { books, isLoading, isFetching, searchQuery, setBooks, setFavorite } = useBooks();
+  const router = useRouter()
 
   const fetchBooks = useCallback(async () => {
     if (isFetching || isLoading) return;
@@ -38,13 +38,20 @@ const BookCardGrid: React.FC<Props> = () => {
     setHasMore(true);
   }, [searchQuery]);
 
-  console.log(hasMore)
+  const handleToggleFavorite = (id: string, callback: (v: boolean) => void) => {
+    setFavorite(id, callback)
+  }
+
+  const handleReadBook = (id: string) => {
+    router.push(`/book/${id}`)
+  }
+
 
   return (
     <Grid container spacing={{ xs: 1, md: 2 }} justifyContent="center" sx={{ mx: "auto", p: 1 }}>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
         {books.map((book) => (
-          <NewBookCard key={book.id} book={book} onToggleFavorite={console.log} />
+          <Card key={book.id} book={book} onToggleFavorite={handleToggleFavorite} onClickRead={handleReadBook} />
         ))}
       </div>
     </Grid>

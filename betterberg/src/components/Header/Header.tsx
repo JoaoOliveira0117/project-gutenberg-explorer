@@ -1,6 +1,6 @@
 "use client"
 import { Box, Container, Typography } from "@mui/material";
-import UserPill from "../UserPill";
+import UserPill from "../UserPill/UserPill";
 
 type Props = {}
 
