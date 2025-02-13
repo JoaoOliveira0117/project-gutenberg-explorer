@@ -6,7 +6,6 @@ export const getAllBooks = async (search?: string, page = 1, pageSize = 25) => {
     page: String(page) || "",
     pageSize: String(pageSize) || ""
   })
-  console.log(`${endpoint}?${query.toString()}`)
   const res = await fetch(`${endpoint}?${query.toString()}`);
   const data = await res.json();
   return data.result || [];

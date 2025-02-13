@@ -21,19 +21,39 @@ export default class BookService extends ApiService {
     return BookService.instance;
   }
 
-  getBooks(): Promise<any> {
+  getBooks() {
     return this.get("/api/books");
   }
 
-  getBookById(id: string): Promise<any> {
+  getBookById(id: string) {
     return this.get(`/api/books/${id}`);
   }
 
-  putBookFavorite(id: string): Promise<any> {
+  putBookFavorite(id: string) {
     return this.put(`/api/books/${id}/favorite`, {});
   }
 
-  deleteBookFavorite(id: string): Promise<any> {
+  deleteBookFavorite(id: string) {
     return this.delete(`/api/books/${id}/favorite`);
+  }
+
+  aiSummarizeBook(id: string) {
+    return this.get(`/api/books/${id}/summarize`);
+  }
+
+  aiDetectLanguagesOfBook(id: string) {
+    return this.get(`/api/books/${id}/language-detection`);
+  }
+
+  aiGetKeyCharactersOfBook(id: string) {
+    return this.get(`/api/books/${id}/key-characters`);
+  }
+
+  aiDetectSentimentOfBook(id: string) {
+    return this.get(`/api/books/${id}/sentiment-detection`);
+  }
+
+  aiAnalyzeSemanticsOfBook(id: string) {
+    return this.get(`/api/books/${id}/semantic-analysis`);
   }
 }

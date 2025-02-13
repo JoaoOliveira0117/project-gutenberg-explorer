@@ -11,3 +11,11 @@ export type Book = {
   } | null;
   book_url: string | null;
 }
+
+export type User = {
+  id: string;
+  email: string;
+  username: string;
+  profile_pic: string;
+  created_at: string;
+}
