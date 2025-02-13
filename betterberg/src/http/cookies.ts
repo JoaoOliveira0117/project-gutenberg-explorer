@@ -25,4 +25,12 @@ export default class Cookies {
   public getValue(name: string) {
     return this.cookieJar.get(name)?.value;
   }
+
+  public setValue(name: string, value: string) {
+    return this.cookieJar.set(name, value)
+  }
+
+  public deleteValue(name: string) {
+    return this.cookieJar.delete(name)
+  }
 }
