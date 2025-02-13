@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { AI_SLUGS } from "../config/prompts/index.js";
 
 export const userValidation = z.object({
   params: z.object({
@@ -60,3 +61,10 @@ export const postLastSeenBookValidation = z.object({
     book_id: z.string(),
   })
 });
+
+export const aiValidation = z.object({
+  params: z.object({
+    book_id: z.string(),
+    type: z.enum(Object.values(AI_SLUGS) as [string, ...string[]])
+  })
+})

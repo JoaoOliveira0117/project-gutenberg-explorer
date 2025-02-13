@@ -72,8 +72,9 @@ export default class BooksRepository extends Repository {
     const selectFields = fields || "*";
 
     let result = this.db
-      .select(`user_favorite_books!right(book_id), ${selectFields}`)
+      .select(`user_favorite_books!inner(book_id), ${selectFields}`)
       .eq('user_favorite_books.user_id', user_id)
+      .order('created_at', { referencedTable: 'user_favorite_books', ascending: false })
 
     const { error, data } = await result.range(page - 1, page + pageSize).returns<BookResponse[]>();
 
@@ -88,8 +89,10 @@ export default class BooksRepository extends Repository {
     const selectFields = fields || "*";
 
     let result = this.db
-      .select(`user_last_seen_books!right(book_id), ${selectFields}`)
+      .select(`user_last_seen_books!inner(book_id), ${selectFields}`)
       .eq('user_last_seen_books.user_id', user_id)
+      .order('created_at', { referencedTable: 'user_last_seen_books', ascending: false })
+      .limit(5)
 
     const { error, data } = await result.range(page - 1, page + pageSize).returns<BookResponse[]>();
 

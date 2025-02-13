@@ -9,8 +9,15 @@ import getAllBooksController from "../controllers/books/getAll.controller.js";
 import getBookByIdController from "../controllers/books/getById.controller.js";
 import putFavoriteBookController from "../controllers/books/putFavoriteBook.controller.js";
 import deleteFavoriteBookController from "../controllers/books/deleteFavoriteBook.controller.js";
+import summarizeBookController from "../controllers/books/summarizeBook.controller.js";
+import getAllFavoritesController from "../controllers/books/getAllFavorites.controller.js";
+import getAllLastSeenController from "../controllers/books/getAllLastSeen.controller.js";
 
 const router = Router();
+
+router.get('/health', (req, res) => {
+  res.json('OK');
+})
 
 router.get("/redirect", redirectController);
 
@@ -23,7 +30,10 @@ router.get("/user/:id", getByIdController);
 
 // Books service routes
 router.get("/books", getAllBooksController);
+router.get("/books/favorites", getAllFavoritesController);
+router.get("/books/last-seen", getAllLastSeenController);
 router.get("/books/:id", getBookByIdController);
+router.get("/books/:id/ai/summarize", summarizeBookController);
 router.put("/books/:id/favorite", putFavoriteBookController);
 router.delete("/books/:id/favorite", deleteFavoriteBookController);
 

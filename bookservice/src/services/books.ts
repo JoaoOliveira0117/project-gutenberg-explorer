@@ -1,4 +1,5 @@
 import BooksRepository, { BookRequest } from "../repositories/books.repository.js";
+import UploadService from "./upload.js";
 
 export default class BooksService {
   protected repository;
@@ -38,5 +39,20 @@ export default class BooksService {
 
   async updateBookById(user_id: string, book_id: string, body: Partial<BookRequest>, fields?: string) {
     return this.repository.updateBookById(user_id, book_id, body, fields);
+  }
+
+  async findOrUploadBook(id: string) {
+    const uploadService = new UploadService();
+    const filename = `${id}.txt`
+
+    const bookTextExists = await uploadService.fileExists(filename);
+
+    if (!bookTextExists) {
+      const response = await fetch(`https://www.gutenberg.org/cache/epub/${id}/pg${id}.txt`)
+      const stream = response.body;
+      await uploadService.uploadFile(filename, stream as any);
+    }
+    
+    return uploadService.getFileUrl(filename)
   }
 }

@@ -13,6 +13,10 @@ import { accessMiddleware } from "../middlewares/access.middleware.js";
 
 const router = Router();
 
+router.get('/health', (req, res) => {
+  res.json('OK');
+})
+
 router.get('/google/redirect', validate(redirectValidation), passportMiddleware, redirectController);
 router.get('/google/callback', validate(callbackValidation), passportCallbackMiddleware, callbackController);
 

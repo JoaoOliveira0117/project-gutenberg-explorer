@@ -4,8 +4,13 @@ export default class BooksService extends Service {
   constructor() {
     super(process.env.BOOKS_SERVICE!);
   }
+  
+  async getHealthCheck() {
+    const response = this.client.get("api/health");
+    return response.json();
+  }
 
-  async getBooks(query: { search?: string, fields?: string | string[], skip: number, take: number }, user_id: string) {
+  async getBooks(query: { search?: string, fields?: string | string[], skip: number, take: number }, user_id: string, filter?: 'favorites' | 'last-seen') {
     const { search, fields, skip, take } = query;
     const searchParams: Record<string, string> = {};
 
@@ -13,8 +18,9 @@ export default class BooksService extends Service {
     searchParams.take = String(take);
     if (search) searchParams.search = search;
     if (fields) searchParams.fields = typeof fields === "string" ? fields : fields?.join(",");
+    const urlFilter = filter ? '/' + filter : ''
 
-    const response = this.client.get(`api/${user_id}/books`, {
+    const response = this.client.get(`api/${user_id}/books${urlFilter}`, {
       headers: await this.getHeaders(),
       searchParams 
     });
@@ -52,6 +58,14 @@ export default class BooksService extends Service {
 
   async putLastSeenBook(id: string, user_id: string) {
     const response = this.client.put(`api/${user_id}/books/${id}/last-seen`, {
+      headers: await this.getHeaders()
+    })
+
+    return response.json();
+  }
+
+  async summarizeBook(id: string, user_id: string) {
+    const response = this.client.get(`api/${user_id}/books/${id}/ai/summarize`, {
       headers: await this.getHeaders()
     })
 

@@ -12,19 +12,7 @@ class GetById extends BooksController {
     const book = await service.findBookById(id, user_id, fields);
 
     if (!book.book_url) {
-      const uploadService = new UploadService();
-      const filename = `${id}.txt`
-  
-      const bookTextExists = await uploadService.fileExists(filename);
-      let fileUrl
-  
-      if (!bookTextExists) {
-        const response = await fetch(`https://www.gutenberg.org/cache/epub/${id}/pg${id}.txt`)
-        const stream = response.body;
-        await uploadService.uploadFile(filename, stream as any);
-      }
-      
-      fileUrl = await uploadService.getFileUrl(filename);
+      const fileUrl = await service.findOrUploadBook(id);
 
       return service.updateBookById(user_id, id, { book_url: fileUrl }, fields);
     }

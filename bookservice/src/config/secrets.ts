@@ -9,6 +9,7 @@ type SecretsType = {
   APP_URL: string;
   API_URL: string;
   API_KEY: string;
+  GROQ_API_KEY: string;
 } 
 
 export default class Secrets {

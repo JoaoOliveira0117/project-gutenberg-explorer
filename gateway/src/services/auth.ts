@@ -5,6 +5,11 @@ export default class AuthService extends Service {
     super(process.env.AUTH_SERVICE!);
   }
 
+  async getHealthCheck() {
+    const response = this.client.get("api/health");
+    return response.json();
+  }
+
   async getUserMe(token: string) {
     const response = this.client.get("api/user/me", {
       headers: await this.getHeaders(token)
