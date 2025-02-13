@@ -9,7 +9,7 @@ import getAllBooksController from "../controllers/books/getAll.controller.js";
 import getBookByIdController from "../controllers/books/getById.controller.js";
 import putFavoriteBookController from "../controllers/books/putFavoriteBook.controller.js";
 import deleteFavoriteBookController from "../controllers/books/deleteFavoriteBook.controller.js";
-import summarizeBookController from "../controllers/books/summarizeBook.controller.js";
+import getBookAnalysis from "../controllers/books/getBookAnalysis.controller.js";
 import getAllFavoritesController from "../controllers/books/getAllFavorites.controller.js";
 import getAllLastSeenController from "../controllers/books/getAllLastSeen.controller.js";
 
@@ -33,7 +33,7 @@ router.get("/books", getAllBooksController);
 router.get("/books/favorites", getAllFavoritesController);
 router.get("/books/last-seen", getAllLastSeenController);
 router.get("/books/:id", getBookByIdController);
-router.get("/books/:id/ai/summarize", summarizeBookController);
+router.get("/books/:id/ai/:type", getBookAnalysis);
 router.put("/books/:id/favorite", putFavoriteBookController);
 router.delete("/books/:id/favorite", deleteFavoriteBookController);
 

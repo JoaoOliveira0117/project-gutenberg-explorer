@@ -64,8 +64,8 @@ export default class BooksService extends Service {
     return response.json();
   }
 
-  async summarizeBook(id: string, user_id: string) {
-    const response = this.client.get(`api/${user_id}/books/${id}/ai/summarize`, {
+  async GetBookAnalysis(id: string, user_id: string, slug: string) {
+    const response = this.client.get(`api/${user_id}/books/${id}/ai/${slug}`, {
       headers: await this.getHeaders()
     })
 
