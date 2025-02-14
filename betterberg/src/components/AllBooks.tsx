@@ -13,12 +13,6 @@ export default function AllBooks() {
     getMoreBooks();
   }
 
-  if (isLoading) return (
-    <div className="max-w-6xl mx-auto mt-12">
-      <CgSpinner size={64} className="animate-spin min-h-8 min-w-8 text-blue-600 m-auto" />
-    </div>
-  );
-
   if (error) return (
     <div className="max-w-6xl mx-auto mt-12">
       <h1 className="text-4xl text-center text-red-600">An error occurred while fetching books</h1>
@@ -30,7 +24,7 @@ export default function AllBooks() {
       <div className="w-full mt-12 m-4">
         <SearchBooks />
       </div>
-      <BookCardGrid books={books} addFavorite={favoriteBook} removeFavorite={removeFavoriteBook}/>
+      <BookCardGrid books={books} addFavorite={favoriteBook} removeFavorite={removeFavoriteBook} isLoading={isLoading}/>
       <div className="w-full mt-12 m-4 flex justify-center items-center">
         <Button variant={"default"} onClick={handleLoadMore} disabled={!canFetchMore || isFetching} className="
           text-xl text-white text-center m-auto bg-blue-600 hover:bg-blue-700 active:bg-blue-800 transition-all duration-200
