@@ -44,7 +44,6 @@ const UserProvider: React.FC<Props> = ({ children }) => {
       cache: 'no-store'
     }))
       .then((data) => {
-        console.log(data)
         setUser(data.result)
       })
       .catch(setError)
