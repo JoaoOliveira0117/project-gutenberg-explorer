@@ -1,7 +1,7 @@
 "use client";
 
 import BookText from "./Text";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Header from "./Header";
 import { useBook } from "@/hooks/useBook";
 import { CgSpinner } from "react-icons/cg";

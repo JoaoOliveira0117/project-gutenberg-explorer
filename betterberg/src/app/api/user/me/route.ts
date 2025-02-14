@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = 'force-dynamic'
 
-async function getUserMe(req: NextRequest) {
+async function getUserMe() {
   const cookieJar = await cookies()
   const token = cookieJar.get("token")?.value;
   const service = new UserService();
