@@ -4,14 +4,14 @@ import SearchBooks from "./SearchBooks";
 import { useLastSeenBooks } from "@/hooks/useLastSeenBooks";
 
 export default function LastSeenBooks() {
-  const { books } = useLastSeenBooks();
+  const { books, favoriteBook, removeFavoriteBook } = useLastSeenBooks();
 
   return (
     <div className="max-w-6xl mx-auto">
       <div className="w-full mt-12 m-4">
         <SearchBooks />
       </div>
-      <BookCardGrid books={books}/>
+      <BookCardGrid books={books} addFavorite={favoriteBook} removeFavorite={removeFavoriteBook}/>
     </div>
   );
 }

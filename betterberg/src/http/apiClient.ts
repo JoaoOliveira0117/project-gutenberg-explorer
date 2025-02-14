@@ -32,6 +32,9 @@ export default class ApiClient {
     try {
       const url = this.getUrl(endpoint);
       const parsedBody = this.getBody(body);
+
+      console.log(url)
+
       const response = await this.client(url, {
         cache: "no-cache",
         method: "GET",
@@ -76,7 +79,7 @@ export default class ApiClient {
     return this.call(endpoint, body, { ...options, method: "PUT" });
   }
 
-  public async delete(url: string, options: RequestInit = {}) {
-    return this.client(url, { ...options, method: "DELETE" });
+  public async delete(endpoint: string, options: RequestInit = {}) {
+    return this.call(endpoint, {}, { ...options, method: "DELETE" });
   }
 }

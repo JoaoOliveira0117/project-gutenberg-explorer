@@ -8,12 +8,22 @@ import { useState } from "react";
 
 type Props = {
   book: Book;
-  onToggleFavorite: (id: string, callback: (v: boolean) => void) => void;
+  addFavorite: (id: string, callback: () => void) => void;
+  removeFavorite: (id: string, callback: () => void) => void;
   onClickRead: (id: string) => void;
 }
 
-const BookCard: React.FC<Props> = ({ book, onToggleFavorite, onClickRead }) => {
-  const [favorite, setFavorite] = useState(!!book.user_favorite_books);;
+const BookCard: React.FC<Props> = ({ book, addFavorite, removeFavorite, onClickRead }) => {
+  const [favorite, setFavorite] = useState(!!book.user_favorite_books);
+
+  const handleClickFavorite = (id: string, callback: (v: boolean) => void) => {
+    if (favorite) {
+      removeFavorite(id, () => callback(false));
+    } else {
+      addFavorite(id, () => callback(true));
+    }
+  }
+
   return (
     <Card className="w-full max-w-xs flex flex-col items-center p-2 shadow-md rounded-lg">
       <div className="h-56 overflow-hidden flex justify-center items-center shadow-lg rounded-lg my-6">
@@ -35,7 +45,7 @@ const BookCard: React.FC<Props> = ({ book, onToggleFavorite, onClickRead }) => {
           <Tags subjects={book.subjects} tags={book.tags} />
         </div>
         <div className="flex flex-wrap justify-end gap-2 mt-2">
-          <Button variant="ghost" onClick={() => onToggleFavorite(book.id, setFavorite)} className="">
+          <Button variant="ghost" onClick={() => handleClickFavorite(book.id, setFavorite)} className="">
             {favorite ? <AiFillHeart className="text-red-600 text-3xl" /> : <AiOutlineHeart className="text-3xl" />}
           </Button>
           <Button variant="link" onClick={() => onClickRead(book.id)} className="

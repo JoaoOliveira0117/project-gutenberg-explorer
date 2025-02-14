@@ -35,7 +35,7 @@ export default class FavoritesRepository extends Repository {
   async addFavorite(favorite: FavoritesRequest): Promise<FavoritesResponse> {
     await this.booksRepository.findBookById(favorite.book_id, favorite.user_id);
 
-    const { error, data } = await this.db.insert(favorite).single();
+    const { error, data } = await this.db.upsert(favorite, { onConflict: 'user_id,book_id' }).single();
 
     if (error) {
       throw this.handleError(error);
@@ -46,6 +46,8 @@ export default class FavoritesRepository extends Repository {
 
   async removeFavorite(favorite: FavoritesRequest): Promise<FavoritesResponse> {
     await this.booksRepository.findBookById(favorite.book_id, favorite.user_id);
+
+    console.log(favorite)
 
     const { error, data } = await this.db.delete()
       .eq('user_id', favorite.user_id)

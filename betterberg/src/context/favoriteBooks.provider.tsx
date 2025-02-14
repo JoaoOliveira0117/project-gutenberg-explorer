@@ -9,6 +9,8 @@ type FavoriteBooksContextType = {
   error: any | null;
   getBooks: () => Promise<void>;
   clearBooks: () => void;
+  favoriteBook: (id: string, callback: (v: boolean) => void) => void;
+  removeFavoriteBook: (id: string, callback: (v: boolean) => void) => void;
 }
 
 type Props = {
@@ -22,6 +24,8 @@ export const FavoriteBooksContext = createContext<FavoriteBooksContextType>({
   error: null,
   getBooks: async () => {},
   clearBooks: () => {},
+  favoriteBook: () => {},
+  removeFavoriteBook: () => {},
 })
 
 const FavoriteBooksProvider: React.FC<Props> = ({ children }) => {
@@ -49,6 +53,59 @@ const FavoriteBooksProvider: React.FC<Props> = ({ children }) => {
         setIsLoading(false)
       })
   }
+  
+  const favoriteBook = async (id: string, callback: (v: boolean) => void) => {
+    if (isLoading || isFetching) return;
+
+    setIsFetching(true)
+    callback(true)
+
+    return fetcher(fetch(`/api/books/${id}/favorite`, {
+      method: 'PUT',
+    }))
+      .then(() => {
+        setBooks((previousValue) => {
+          const index = previousValue.findIndex((book) => book.id === id)
+          const updatedBook = { ...previousValue[index], user_last_seen_books: {
+            book_id: id,
+            created_at: new Date().toISOString(),
+          }}
+          return [...previousValue.slice(0, index), updatedBook, ...previousValue.slice(index + 1)]
+        })
+      })
+      .catch((err) => {
+        setError(err)
+        callback(false)
+      })
+      .finally(() => {
+        setIsFetching(false)
+      })
+  }
+  
+  const removeFavoriteBook = async (id: string, callback: (v: boolean) => void) => {
+    if (isLoading || isFetching) return;
+
+    setIsFetching(true)
+    callback(false)
+
+    return fetcher(fetch(`/api/books/${id}/favorite`, {
+      method: 'DELETE',
+    }))
+      .then(() => {
+        setBooks((previousValue) => {
+          const index = previousValue.findIndex((book) => book.id === id)
+          const updatedBook = { ...previousValue[index], user_last_seen_books: null }
+          return [...previousValue.slice(0, index), updatedBook, ...previousValue.slice(index + 1)]
+        })
+      })
+      .catch((err) => {
+        setError(err)
+        callback(true)
+      })
+      .finally(() => {
+        setIsFetching(false)
+      })
+  }
 
   const clearBooks = () => {
     setBooks([])
@@ -67,6 +124,8 @@ const FavoriteBooksProvider: React.FC<Props> = ({ children }) => {
         error,
         getBooks,
         clearBooks,
+        favoriteBook,
+        removeFavoriteBook,
       }
     }>
       {children}

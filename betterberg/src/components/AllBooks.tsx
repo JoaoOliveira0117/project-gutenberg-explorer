@@ -4,14 +4,14 @@ import BookCardGrid from "./BookCard/Grid";
 import SearchBooks from "./SearchBooks";
 
 export default function AllBooks() {
-  const { books } = useBooks();
+  const { books, favoriteBook, removeFavoriteBook } = useBooks();
 
   return (
     <div className="max-w-6xl mx-auto">
       <div className="w-full mt-12 m-4">
         <SearchBooks />
       </div>
-      <BookCardGrid books={books}/>
+      <BookCardGrid books={books} addFavorite={favoriteBook} removeFavorite={removeFavoriteBook}/>
     </div>
   );
 }

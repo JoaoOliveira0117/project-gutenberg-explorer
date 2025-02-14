@@ -15,6 +15,8 @@ type BooksContextType = {
   setPage: (page: number) => void;
   setQuery: (query: string) => void;
   clearBooks: () => void;
+  favoriteBook: (id: string, callback: (v: boolean) => void) => void;
+  removeFavoriteBook: (id: string, callback: (v: boolean) => void) => void;
 }
 
 type Props = {
@@ -31,11 +33,13 @@ export const BooksContext = createContext<BooksContextType>({
   setPage: () => {},
   setQuery: () => {},
   clearBooks: () => {},
+  favoriteBook: () => {},
+  removeFavoriteBook: () => {},
 })
 
 const BooksProvider: React.FC<Props> = ({ children }) => {
   const START_PAGE = 1;
-  const PAGE_SIZE = 2;
+  const PAGE_SIZE = 25;
 
   const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -92,6 +96,59 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
       })
   }
 
+  const favoriteBook = async (id: string, callback: (v: boolean) => void) => {
+    if (isLoading || isFetching) return;
+
+    setIsFetching(true)
+    callback(true)
+
+    return fetcher(fetch(`/api/books/${id}/favorite`, {
+      method: 'PUT',
+    }))
+      .then(() => {
+        setBooks((previousValue) => {
+          const index = previousValue.findIndex((book) => book.id === id)
+          const updatedBook = { ...previousValue[index], user_last_seen_books: {
+            book_id: id,
+            created_at: new Date().toISOString(),
+          }}
+          return [...previousValue.slice(0, index), updatedBook, ...previousValue.slice(index + 1)]
+        })
+      })
+      .catch((err) => {
+        setError(err)
+        callback(false)
+      })
+      .finally(() => {
+        setIsFetching(false)
+      })
+  }
+  
+  const removeFavoriteBook = async (id: string, callback: (v: boolean) => void) => {
+    if (isLoading || isFetching) return;
+
+    setIsFetching(true)
+    callback(false)
+
+    return fetcher(fetch(`/api/books/${id}/favorite`, {
+      method: 'DELETE',
+    }))
+      .then(() => {
+        setBooks((previousValue) => {
+          const index = previousValue.findIndex((book) => book.id === id)
+          const updatedBook = { ...previousValue[index], user_last_seen_books: null }
+          return [...previousValue.slice(0, index), updatedBook, ...previousValue.slice(index + 1)]
+        })
+      })
+      .catch((err) => {
+        setError(err)
+        callback(true)
+      })
+      .finally(() => {
+        setIsFetching(false)
+      })
+  }
+
   const clearBooks = () => {
     setBooks([])
   }
@@ -112,6 +169,8 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
         setPage,
         setQuery,
         clearBooks,
+        favoriteBook,
+        removeFavoriteBook,
       }
     }>
       {children}

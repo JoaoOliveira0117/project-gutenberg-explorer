@@ -74,7 +74,7 @@ export default class BooksRepository extends Repository {
     let result = this.db
       .select(`user_favorite_books!inner(book_id,created_at), ${selectFields}`)
       .eq('user_favorite_books.user_id', user_id)
-      .order('user_favorite_books(created_at)', { ascending: true })
+      .order('user_favorite_books(created_at)', { ascending: false })
 
     const { error, data } = await result.range(page - 1, page + (pageSize - 1 )).returns<BookResponse[]>();
 
