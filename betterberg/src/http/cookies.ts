@@ -23,6 +23,9 @@ export default class Cookies {
   }
 
   public deleteValue(name: string) {
-    return this.cookieJar.delete(name)
+    return this.cookieJar.set(name, '', {
+      httpOnly: true,
+      maxAge: 0
+    })
   }
 }

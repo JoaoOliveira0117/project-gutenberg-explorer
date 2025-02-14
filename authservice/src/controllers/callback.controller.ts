@@ -30,7 +30,7 @@ class CallbackController extends AuthController {
       email: profile._json.email!
     })
 
-    return { provider_id: profile.id, email: profile._json.email! }
+    return { id: user.id, email: profile._json.email! }
   }
 
   async handle() {

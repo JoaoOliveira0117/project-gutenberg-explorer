@@ -2,6 +2,8 @@ import BookService from "@/services/bookService";
 import withErrorHandler from "@/utils/withErrorHandler";
 import { NextResponse } from "next/server";
 
+export const dynamic = 'force-dynamic'
+
 async function getBooks() {
   const service = await BookService.getInstance()
   const data = await service.getBooks(`/favorites`);

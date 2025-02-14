@@ -41,7 +41,7 @@ const UserProvider: React.FC<Props> = ({ children }) => {
     setIsLoading(true)
 
     return fetcher(fetch('/api/user/me', {
-      cache: 'no-cache'
+      cache: 'no-store'
     }))
       .then((data) => {
         setUser(data.result)

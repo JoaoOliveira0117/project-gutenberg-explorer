@@ -1,4 +1,5 @@
 import HttpError from "./error";
+import { unstable_noStore } from "next/cache"
 
 export default class ApiClient {
   private client;
@@ -29,6 +30,7 @@ export default class ApiClient {
   }
 
   private async call(endpoint: string, body: any, options: RequestInit = {}) {
+    unstable_noStore()
     try {
       const url = this.getUrl(endpoint);
       const parsedBody = this.getBody(body);
@@ -36,7 +38,7 @@ export default class ApiClient {
       console.log(url)
 
       const response = await this.client(url, {
-        cache: "no-cache",
+        cache: "no-store",
         method: "GET",
         headers: this.getHeaders(),
         ...options,
