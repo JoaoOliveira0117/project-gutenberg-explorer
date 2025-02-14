@@ -1,4 +1,34 @@
+import HttpError from "@/http/error";
+
 const endpoint = "/api/books";
+
+const call = async (url: string, method = 'GET') => {
+  if (typeof window === 'undefined') {
+    throw new Error("This function can't be executed in the browser");
+  }
+
+  const response = await fetch(url, { method })
+
+  if (!response.ok) {
+    if (response.headers.get("content-type")?.includes("application/json")) {
+      const resBody = await response.json()
+      throw new HttpError(
+        resBody.message,
+        "Client Error",
+        resBody.error?.formatted || [],
+        resBody.error?.raw || [],
+        resBody.status,
+      )
+    }
+  
+    throw new HttpError(
+      "Failed to fetch data",
+      "Client Error",
+    )
+  }
+
+  return response.json();
+}
 
 export const getAllBooks = async (search?: string, page = 1, pageSize = 25) => {
   const query = new URLSearchParams({
@@ -6,9 +36,7 @@ export const getAllBooks = async (search?: string, page = 1, pageSize = 25) => {
     page: String(page) || "",
     pageSize: String(pageSize) || ""
   })
-  const res = await fetch(`${endpoint}?${query.toString()}`);
-  const data = await res.json();
-  return data.result || [];
+  return call(`${endpoint}`)
 }
 
 export const getBookById = async (bookId: string) => {

@@ -1,12 +1,7 @@
-import { Container } from "@mui/material";
-import SearchInput from "@/components/SearchBooks";
-import BookGrid from "@/components/BookCard/Grid";
+import FavoriteBooks from "@/components/FavoriteBooks";
 
-export default function Books() {
+export default function FavoriteBooksPage() {
   return (
-    <Container maxWidth="lg">
-      <SearchInput />
-      <BookGrid />
-    </Container>
+    <FavoriteBooks />
   );
 }

@@ -3,7 +3,7 @@
 import { Container } from "@mui/material";
 import BookText from "./BookText";
 import { useEffect, useState } from "react";
-import BookTextHeader from "./BookTextHeader";
+import Header from "./Header";
 import { Book } from "@/types";
 import { useBook } from "@/hooks/useBook";
 
@@ -12,10 +12,10 @@ type Props = {
 }
 
 const BookTextContainer: React.FC<Props> = ({ id }) => {
-  const { book, getBook } = useBook();
+  const { book, setId } = useBook();
 
   useEffect(() => {
-    getBook(id);
+    setId(id);
   }, [id]);
 
   if (!book) {
@@ -24,15 +24,10 @@ const BookTextContainer: React.FC<Props> = ({ id }) => {
 
   return (
     <>
-      <BookTextHeader book={book} />
-      <Container maxWidth="lg" sx={{ 
-        my: 4, 
-        backgroundColor: "white", 
-        boxShadow: "0.5rem 0.5rem 0.5rem 0.15rem rgba(0,0,0,0.1)",
-        borderRadius: 2,
-      }}>
-        <BookText text={book.book_url || ""} />
-      </Container>
+      <Header book={book} />
+      <article className="max-w-6xl mx-auto my-6 shadow-lg rounded-md border">
+        <BookText id={book.book_id || ""} />
+      </article>
     </>
   );
 }

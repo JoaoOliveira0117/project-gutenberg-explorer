@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import ApiClient from "./apiClient";
 import Cookies from "./cookies";
 import Service from "./service";
@@ -8,11 +7,6 @@ export default class ApiService extends Service {
 
   protected constructor(cookies: Cookies) {
     super(cookies);
-
-    if (!this.isAuthorized()) {
-      NextResponse.redirect("/login");
-      throw new Error("Unauthorized");
-    }
 
     this.client = new ApiClient(process.env.NEXT_PUBLIC_API_URL!, cookies.getValue("token"));
   }

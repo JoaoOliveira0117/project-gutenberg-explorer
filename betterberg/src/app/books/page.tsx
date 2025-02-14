@@ -1,12 +1,13 @@
-import { Container } from "@mui/material";
-import SearchInput from "@/components/SearchBooks";
-import BookGrid from "@/components/BookCard/Grid";
+'use client'
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Books() {
-  return (
-    <Container maxWidth="lg">
-      <SearchInput />
-      <BookGrid />
-    </Container>
-  );
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace("/books/all");
+  }, []);
+
+  return <></>;
 }

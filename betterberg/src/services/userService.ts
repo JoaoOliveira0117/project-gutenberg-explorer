@@ -1,6 +1,6 @@
 import ApiService from "@/http/apiService";
 import Cookies from "@/http/cookies";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export default class UserService extends ApiService {
   protected static instance: UserService;
@@ -22,14 +22,17 @@ export default class UserService extends ApiService {
     return UserService.instance;
   }
 
-  getUserMe(headers?: { [key: string]: string }) {
+  getUserByToken(headers?: { [key: string]: string }) {
     return this.get("/api/user/me", {
       headers: headers
     });
   }
 
+  getUserMe() {
+    return this.get("/api/user/me");
+  }
+
   logout() {
-    this.cookies.deleteValue("token")
-    NextResponse.redirect("/login");
+    this.cookies.deleteValue("token");
   }
 }

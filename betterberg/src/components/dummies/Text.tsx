@@ -1,7 +1,7 @@
 import React from "react";
 import TextTooltip from "./TextTooltip";
 
-type TextComponents = 'p' | 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+type TextComponents = 'p' | 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'pre'
 
 type Props = {
   text: string;

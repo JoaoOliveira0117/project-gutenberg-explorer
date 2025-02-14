@@ -1,12 +1,12 @@
+import { useUser } from "@/hooks/useUser";
 import UserDropdown from "./Dropdown";
 
-interface UserPillProps {
-  email: string;
-  onLogout: () => void;
-}
+export default function UserPill() {
+  const { user, logout } = useUser()
 
-export default function UserPill({ email, onLogout }: UserPillProps) {
+  if (!user) return null;
+
   return (
-    <UserDropdown email={email} onLogout={onLogout} />
+    <UserDropdown email={user.email} onLogout={logout} />
   );
 }

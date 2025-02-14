@@ -7,7 +7,7 @@ export default function withErrorHandler(handler: (req: NextRequest, res?: any) 
       return await handler(req, res);
     } catch (error) {
       if (error instanceof HttpError) {
-        return NextResponse.json({ json: error.toJson() }, { status: error.statusCode });
+        return NextResponse.json(error.toJson(), { status: error.statusCode });
       }
 
       return NextResponse.json({ status: 500, json: { error: "Internal Server Error" } });

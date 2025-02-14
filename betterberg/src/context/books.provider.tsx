@@ -1,16 +1,20 @@
 import { createContext, ReactNode, useEffect, useState } from "react"
 import { Book } from "@/types";
 import { getAllBooks } from "./api/books.api";
+import { useFetch } from "@/hooks/useFetch";
+import { useRouter } from "next/navigation";
+import toQueryString from "@/utils/toQueryString";
 
 type BooksContextType = {
   books: Book[];
   isLoading: boolean;
   isFetching: boolean;
   error: any | null;
+  getBooks: () => Promise<void>;
+  getMoreBooks: () => Promise<void>;
+  setPage: (page: number) => void;
+  setQuery: (query: string) => void;
   clearBooks: () => void;
-  getBooks: (page?: number, pageSize?: number) => Promise<void>;
-  searchBooks: (query: string, page?: number, pageSize?: number) => Promise<void>;
-  loadMoreBooks: (query: string, page?: number, pageSize?: number) => Promise<void>;
 }
 
 type Props = {
@@ -22,82 +26,83 @@ export const BooksContext = createContext<BooksContextType>({
   isLoading: false,
   isFetching: false,
   error: null,
-  clearBooks: () => {},
   getBooks: async () => {},
-  searchBooks: async () => {},
-  loadMoreBooks: async () => {},
+  getMoreBooks: async () => {},
+  setPage: () => {},
+  setQuery: () => {},
+  clearBooks: () => {},
 })
 
 const BooksProvider: React.FC<Props> = ({ children }) => {
+  const START_PAGE = 1;
+  const PAGE_SIZE = 25;
+
+  const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<any | null>(null);
+  const [page, setPage] = useState(START_PAGE);
+  const [query, setQuery] = useState<string>("");
 
-  const [books, setBooks] = useState<Book[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const fetcher = useFetch()
+
+  const getBooks = async () => {
+    if (isLoading || isFetching) return;
+
+    setBooks([])
+    setIsFetching(true)
+    setIsLoading(true)
+
+    const queryParams = toQueryString({
+      search: query.trim(),
+      page: 1,
+      pageSize: PAGE_SIZE,
+    })
+
+    return fetcher(fetch('/api/books' + queryParams))
+      .then((data) => {
+        setBooks(data.result)
+      })
+      .catch(setError)
+      .finally(() => {
+        setIsFetching(false)
+        setIsLoading(false)
+      })
+  }
+
+  const getMoreBooks = async () => {
+    if (isLoading || isFetching) return;
+
+    setBooks([])
+    setIsFetching(true)
+
+    const queryParams = toQueryString({
+      search: query.trim(),
+      page: page,
+      pageSize: PAGE_SIZE,
+    })
+
+    return fetcher(fetch('/api/books' + queryParams))
+      .then((data) => {
+        setBooks((previousValue) => [...previousValue, ...data.result])
+      })
+      .catch(setError)
+      .finally(() => {
+        setIsFetching(false)
+      })
+  }
 
   const clearBooks = () => {
     setBooks([])
   }
 
-  const getBooks = async (page?: number, pageSize?: number) => {
-    if (isLoading || isFetching) return;
-
-    setIsFetching(true)
-    setIsLoading(true)
-
-    try {
-      const fetchedBooks = await getAllBooks(searchQuery, page, pageSize)
-      setBooks(fetchedBooks)
-    } catch (error) {
-      setError(error)
-    } finally {
-      setIsFetching(false)
-      setIsLoading(false)
-    }
-  }
-
-  const searchBooks = async (query: string, page?: number, pageSize?: number) => {
-    if (isLoading || isFetching) return;
-
-    setSearchQuery(query)
-    setBooks([])
-    setIsFetching(true)
-    setIsLoading(true)
-
-    try {
-      const fetchedBooks = await getAllBooks(query, page, pageSize)
-      setBooks(fetchedBooks)
-    } catch (error) {
-      setError(error)
-    } finally {
-      setIsFetching(false)
-      setIsLoading(false)
-    }
-  }
-
-  const loadMoreBooks = async (query: string, page?: number, pageSize?: number) => {
-    if (isLoading || isFetching) return;
-
-    setBooks([])
-    setIsFetching(true)
-    setIsLoading(true)
-
-    try {
-      const fetchedBooks = await getAllBooks(query, page, pageSize)
-      setBooks(prevBooks => [...prevBooks,...fetchedBooks])
-    } catch (error) {
-      setError(error)
-    } finally {
-      setIsFetching(false)
-      setIsLoading(false)
-    }
-  }
+  useEffect(() => {
+    getBooks()
+  }, [query])
 
   useEffect(() => {
-    console.log("AKJHBASFKJHSGDFKLB")
-    getBooks()
-  }, [])
+    getMoreBooks()
+  }, [page])
 
   return (
     <BooksContext.Provider value={
@@ -106,10 +111,11 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
         isLoading,
         isFetching,
         error,
-        clearBooks,
         getBooks,
-        searchBooks,
-        loadMoreBooks,
+        getMoreBooks,
+        setPage,
+        setQuery,
+        clearBooks,
       }
     }>
       {children}

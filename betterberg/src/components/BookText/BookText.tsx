@@ -1,26 +1,23 @@
-import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import Text from "../dummies/Text";
 
 type Props = {
-  text: string;
+  id: string;
 }
 
-const BookText: React.FC<Props> = ({ text }) => {
-  const [file, setFile] = useState('')
+const BookText: React.FC<Props> = ({ id }) => {
+  const [text, setText] = useState('')
 
   useEffect(() => {
-    fetch(text)
-      .then((response) => response.text())
+    fetch(`/api/books/${id}/text`)
+      .then((res) => res.text())
       .then((text) => {
-        text.replace(/\\r/g, '\r').replace(/\\n/g, '\n');
-        setFile(text);
-      });
-  }, [text])
+        setText(text.replace(/\\r/g, '\r').replace(/\\n/g, '\n'))
+      })
+  }, [id])
 
   return (
-    <Typography variant="body1" sx={{ p: 8, whiteSpace: "pre-wrap" }}>
-      {file}
-    </Typography>
+    <Text as="pre" text={text} className="font-sans text-md py-16 p-8 text-justify w-fit whitespace-pre-wrap"/>
   );
 }
 

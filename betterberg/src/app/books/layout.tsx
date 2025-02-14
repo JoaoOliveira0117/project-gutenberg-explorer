@@ -1,6 +1,7 @@
 "use client"
 
-import BooksProvider from "@/context/books.provider";
+import Header from "@/components/Header/Header";
+import UserProvider from "@/context/user.provider";
 
 export default function BookLayout({
   children,
@@ -8,8 +9,9 @@ export default function BookLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <BooksProvider>
+    <UserProvider>
+      <Header />
       {children}
-    </BooksProvider>
+    </UserProvider>
   );
 }

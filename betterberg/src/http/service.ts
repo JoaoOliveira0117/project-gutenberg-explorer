@@ -1,3 +1,4 @@
+import { NextRequest } from "next/server";
 import Cookies from "./cookies";
 
 export default class Service {

@@ -1,5 +1,6 @@
 import ApiService from "@/http/apiService";
 import Cookies from "@/http/cookies";
+import { NextRequest } from "next/server";
 
 export default class BookService extends ApiService {
   protected static instance: BookService;
@@ -21,12 +22,12 @@ export default class BookService extends ApiService {
     return BookService.instance;
   }
 
-  getBooks() {
-    return this.get("/api/books");
+  getBooks(query?: string) {
+    return this.get("/api/books" + query);
   }
 
-  getBookById(id: string) {
-    return this.get(`/api/books/${id}`);
+  getBookById(id: string, query?: string) {
+    return this.get(`/api/books/${id}` + query);
   }
 
   putBookFavorite(id: string) {

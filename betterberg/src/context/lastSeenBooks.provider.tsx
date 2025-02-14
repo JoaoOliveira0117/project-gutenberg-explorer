@@ -1,47 +1,47 @@
 import { createContext, ReactNode, useEffect, useState } from "react"
 import { Book } from "@/types";
-import { getBookById } from "./api/books.api";
 import { useFetch } from "@/hooks/useFetch";
 
-type BookByIdContextType = {
-  book: Book | null;
+type LastSeenBooksContextType = {
+  books: Book[];
   isLoading: boolean;
   isFetching: boolean;
   error: any | null;
-  setId: (id: string) => void;
+  getBooks: () => Promise<void>;
+  clearBooks: () => void;
 }
 
 type Props = {
   children: ReactNode;
 }
 
-export const BookByIdContext = createContext<BookByIdContextType>({
-  book: null,
+export const LastSeenBooksContext = createContext<LastSeenBooksContextType>({
+  books: [],
   isLoading: false,
   isFetching: false,
   error: null,
-  setId: () => {}
+  getBooks: async () => {},
+  clearBooks: () => {},
 })
 
-const BookByIdProvider: React.FC<Props> = ({ children }) => {
-  const [id, setId] = useState("");
-  const [book, setBook] = useState<Book | null>(null);
+const LastSeenBooksProvider: React.FC<Props> = ({ children }) => {
+  const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<any | null>(null);
 
   const fetcher = useFetch()
 
-  const getBook = async () => {
+  const getBooks = async () => {
     if (isLoading || isFetching) return;
 
-    setBook(null)
+    setBooks([])
     setIsFetching(true)
     setIsLoading(true)
 
-    return fetcher(fetch('/api/books/' + id))
+    return fetcher(fetch('/api/books/last-seen'))
       .then((data) => {
-        setBook(data.result)
+        setBooks(data.result)
       })
       .catch(setError)
       .finally(() => {
@@ -50,24 +50,28 @@ const BookByIdProvider: React.FC<Props> = ({ children }) => {
       })
   }
 
+  const clearBooks = () => {
+    setBooks([])
+  }
+
   useEffect(() => {
-    if (!id) return;
-    getBook();
-  }, [id])
+    getBooks()
+  }, [])
 
   return (
-    <BookByIdContext.Provider value={
+    <LastSeenBooksContext.Provider value={
       {
-        book,
+        books,
         isLoading,
         isFetching,
         error,
-        setId,
+        getBooks,
+        clearBooks,
       }
     }>
       {children}
-    </BookByIdContext.Provider>
+    </LastSeenBooksContext.Provider>
   );
 }
 
-export default BookByIdProvider;
+export default LastSeenBooksProvider;

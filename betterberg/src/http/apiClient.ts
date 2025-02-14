@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import HttpError from "./error";
 
 export default class ApiClient {
@@ -7,8 +6,8 @@ export default class ApiClient {
   private accessToken: string | undefined;
   private serviceName: string;
 
-  constructor(baseUrl: string, accessToken?: string, serviceName = "API") {
-    this.client = fetch;
+  constructor(baseUrl: string, accessToken?: string, serviceName = "API", overrideClient?: any) {
+    this.client = overrideClient || fetch;
     this.baseUrl = baseUrl;
     this.accessToken = accessToken;
     this.serviceName = serviceName;
@@ -40,14 +39,21 @@ export default class ApiClient {
         ...parsedBody,
       });
 
+      console.log({
+        method: "GET",
+        headers: this.getHeaders(),
+        ...options,
+        ...parsedBody,
+      })
+
       if (!response.ok) {
         if (response.headers.get("content-type")?.includes("application/json")) {
           const resBody = await response.json()
           throw new HttpError(
             resBody.message,
             this.serviceName + " Error",
-            resBody.error.formatted,
-            resBody.error.raw,
+            resBody.error?.formatted || [],
+            resBody.error?.raw || [],
             resBody.status,
           )
         }
@@ -65,7 +71,7 @@ export default class ApiClient {
   }
 
   public async get(endpoint: string, options: RequestInit = {}) {
-    return this.call(endpoint, options);
+    return this.call(endpoint, {}, options);
   }
 
   public async post(endpoint: string, body: any, options: RequestInit = {}) {
