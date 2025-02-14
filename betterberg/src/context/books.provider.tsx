@@ -8,9 +8,10 @@ type BooksContextType = {
   isLoading: boolean;
   isFetching: boolean;
   error: any | null;
+  canFetchMore: boolean;
   getBooks: () => Promise<void>;
   getMoreBooks: () => Promise<void>;
-  setPage: (page: number) => void;
+  setPage: (page: number | ((prev: number) => number)) => void;
   setQuery: (query: string) => void;
   clearBooks: () => void;
   favoriteBook: (id: string, callback: (v: boolean) => void) => void;
@@ -25,6 +26,7 @@ export const BooksContext = createContext<BooksContextType>({
   books: [],
   isLoading: false,
   isFetching: false,
+  canFetchMore: false,
   error: null,
   getBooks: async () => {},
   getMoreBooks: async () => {},
@@ -45,6 +47,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
   const [error, setError] = useState<any | null>(null);
   const [page, setPage] = useState(START_PAGE);
   const [query, setQuery] = useState<string>("");
+  const [canFetchMore, setCanFetchMore] = useState(true);
 
   const fetcher = useFetch()
 
@@ -61,7 +64,9 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
       pageSize: PAGE_SIZE,
     })
 
-    return fetcher(fetch('/api/books' + queryParams))
+    return fetcher(fetch('/api/books' + queryParams, {
+      cache: 'no-store',
+    }))
       .then((data) => {
         setBooks(data.result)
       })
@@ -73,9 +78,8 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
   }
 
   const getMoreBooks = async () => {
-    if (isLoading || isFetching) return;
+    if (isLoading || isFetching || !canFetchMore) return;
 
-    setBooks([])
     setIsFetching(true)
 
     const queryParams = toQueryString({
@@ -86,6 +90,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
 
     return fetcher(fetch('/api/books' + queryParams))
       .then((data) => {
+        setCanFetchMore(data.result.length >= PAGE_SIZE);
         setBooks((previousValue) => [...previousValue, ...data.result])
       })
       .catch(setError)
@@ -162,6 +167,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
         isLoading,
         isFetching,
         error,
+        canFetchMore,
         getBooks,
         getMoreBooks,
         setPage,
