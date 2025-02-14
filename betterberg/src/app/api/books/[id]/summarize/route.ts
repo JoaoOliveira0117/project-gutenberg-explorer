@@ -7,7 +7,7 @@ async function summarizeBook(req: NextRequest, { params }: { params: Promise<{ i
   const cookieJar = await cookies()
   const token = cookieJar.get("token")?.value;
   const { id } = await params;
-  const service = await BookService.getInstance();
+  const service = new BookService();
   const data = await service.aiSummarizeBook(id, {
     headers: { 'Authorization': `Bearer ${token}` },
   });

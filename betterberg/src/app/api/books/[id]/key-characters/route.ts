@@ -7,7 +7,7 @@ async function keyCharactersOfBook(req: NextRequest, { params }: { params: Promi
   const cookieJar = await cookies()
   const token = cookieJar.get("token")?.value;
   const { id } = await params;
-  const service = await BookService.getInstance();
+  const service = new BookService();
   const data = await service.aiGetKeyCharactersOfBook(id, {
     headers: { 'Authorization': `Bearer ${token}` },
   });

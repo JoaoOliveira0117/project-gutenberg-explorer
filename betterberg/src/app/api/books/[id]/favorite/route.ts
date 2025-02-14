@@ -7,7 +7,7 @@ async function favoriteBook(req: NextRequest, { params }: { params: Promise<{ id
   const cookieJar = await cookies()
   const token = cookieJar.get("token")?.value;
   const { id } = await params;
-  const service = await BookService.getInstance();
+  const service = new BookService();
   await service.putBookFavorite(id, {
     headers: { 'Authorization': `Bearer ${token}` },
   });
@@ -18,7 +18,7 @@ async function removeFavoriteBook(req: NextRequest, { params }: { params: Promis
   const cookieJar = await cookies()
   const token = cookieJar.get("token")?.value;
   const { id } = await params;
-  const service = await BookService.getInstance();
+  const service = new BookService();
   await service.deleteBookFavorite(id, {
     headers: { 'Authorization': `Bearer ${token}` },
   });

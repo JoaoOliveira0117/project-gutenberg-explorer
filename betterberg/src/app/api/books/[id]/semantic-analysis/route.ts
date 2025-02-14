@@ -7,7 +7,7 @@ async function analyzeSemanticsOfBook(req: NextRequest, { params }: { params: Pr
   const cookieJar = await cookies()
   const token = cookieJar.get("token")?.value;
   const { id } = await params;
-  const service = await BookService.getInstance();
+  const service = new BookService();
   const data = await service.aiAnalyzeSemanticsOfBook(id, {
     headers: { 'Authorization': `Bearer ${token}` },
   });

@@ -4,13 +4,11 @@ import { unstable_noStore } from "next/cache"
 export default class ApiClient {
   private client;
   private baseUrl;
-  private accessToken: string | undefined;
   private serviceName: string;
 
-  constructor(baseUrl: string, accessToken?: string, serviceName = "API", overrideClient?: any) {
+  constructor(baseUrl: string, serviceName = "API", overrideClient?: any) {
     this.client = overrideClient || fetch;
     this.baseUrl = baseUrl;
-    this.accessToken = accessToken;
     this.serviceName = serviceName;
   }
 
@@ -20,8 +18,7 @@ export default class ApiClient {
 
   private getHeaders() {
     return {
-      "Content-Type": "application/json",
-      ...(this.accessToken ? { Authorization: `Bearer ${this.accessToken}`} : {}),
+      "Content-Type": "application/json"
     };
   }
 

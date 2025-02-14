@@ -9,7 +9,7 @@ async function getBooks(req: NextRequest) {
   const cookieJar = await cookies()
   const token = cookieJar.get("token")?.value;
   const { searchParams } = new URL(req.url);
-  const service = await BookService.getInstance()
+  const service = new BookService()
   const data = await service.getBooks(`?${searchParams.toString()}`, {
     headers: { 'Authorization': `Bearer ${token}` },
   });

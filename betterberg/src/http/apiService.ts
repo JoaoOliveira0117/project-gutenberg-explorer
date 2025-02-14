@@ -1,18 +1,12 @@
 import ApiClient from "./apiClient";
-import Cookies from "./cookies";
 import Service from "./service";
 
 export default class ApiService extends Service {
   private client: ApiClient;
 
-  protected constructor(cookies: Cookies) {
-    super(cookies);
-
-    this.client = new ApiClient(process.env.NEXT_PUBLIC_API_URL!, cookies.getValue("token"));
-  }
-
-  protected isAuthorized(): boolean {
-    throw new Error("Method not implemented.");
+  constructor() {
+    super()
+    this.client = new ApiClient(process.env.NEXT_PUBLIC_API_URL!);
   }
 
   protected async get(endpoint: string, options: RequestInit = {}) {

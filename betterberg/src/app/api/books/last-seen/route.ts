@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 async function getBooks() {
   const cookieJar = await cookies()
   const token = cookieJar.get("token")?.value;
-  const service = await BookService.getInstance();
+  const service = new BookService();
   const data = await service.getBooks(`/last-seen`, {
     headers: { 'Authorization': `Bearer ${token}` },
   });

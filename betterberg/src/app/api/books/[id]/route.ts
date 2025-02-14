@@ -10,7 +10,7 @@ async function getBookById(req: NextRequest, { params }: { params: Promise<{ id:
   const token = cookieJar.get("token")?.value;
   const { id } = await params;
   const { searchParams } = new URL(req.url);
-  const service = await BookService.getInstance();
+  const service = new BookService();
   const data = await service.getBookById(id, `?${searchParams.toString()}`,{
     headers: { 'Authorization': `Bearer ${token}` },
   });

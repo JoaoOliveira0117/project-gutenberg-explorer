@@ -7,7 +7,7 @@ async function detectLanguagesOfBook(req: NextRequest, { params }: { params: Pro
   const cookieJar = await cookies()
   const token = cookieJar.get("token")?.value;
   const { id } = await params;
-  const service = await BookService.getInstance();
+  const service = new BookService();
   const data = await service.aiDetectLanguagesOfBook(id, {
     headers: { 'Authorization': `Bearer ${token}` },
   });
