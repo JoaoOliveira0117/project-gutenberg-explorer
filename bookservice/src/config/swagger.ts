@@ -5,17 +5,12 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Guthenberg project authentication service',
+      title: 'Guthenberg project book service',
       version: '1.0.0',
       description: 'API Documentation',
     },
     components: {
       securitySchemes: {
-        bearerAuth: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
-        },
         ApiKeyAuth: {
           "type": "apiKey",
           "in": "header",
@@ -26,14 +21,11 @@ const options = {
     },
     security: [
       {
-        bearerAuth: []
-      },
-      {
         apiKeyAuth: []
       }
     ],
   },
-  apis: ['src/controllers/*.ts'],
+  apis: ['src/controllers/**/*.ts'],
 }
 
 const swaggerDocs = swaggerJSDoc(options);
