@@ -38,22 +38,22 @@ export default class BookService extends ApiService {
   }
 
   aiSummarizeBook(id: string) {
-    return this.get(`/api/books/${id}/summarize`);
+    return this.get(`/api/books/${id}/ai/summarize`);
   }
 
   aiDetectLanguagesOfBook(id: string) {
-    return this.get(`/api/books/${id}/language-detection`);
+    return this.get(`/api/books/${id}/ai/language-detection`);
   }
 
   aiGetKeyCharactersOfBook(id: string) {
-    return this.get(`/api/books/${id}/key-characters`);
+    return this.get(`/api/books/${id}/ai/key-characters`);
   }
 
   aiDetectSentimentOfBook(id: string) {
-    return this.get(`/api/books/${id}/sentiment-detection`);
+    return this.get(`/api/books/${id}/ai/sentiment-analysis`);
   }
 
   aiAnalyzeSemanticsOfBook(id: string) {
-    return this.get(`/api/books/${id}/semantic-analysis`);
+    return this.get(`/api/books/${id}/ai/semantic-analysis`);
   }
 }

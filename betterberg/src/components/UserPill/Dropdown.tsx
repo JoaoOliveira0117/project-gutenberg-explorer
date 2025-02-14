@@ -27,10 +27,6 @@ const UserDropdown: React.FC<Props> = ({ email, onLogout }) => {
             align="start"
             className="absolute bg-white border border-gray-300 shadow-lg rounded-lg p-2 w-40 z-50"
           > 
-            <UserOption icon={<AiOutlineUser />} label="Account" onClick={console.log}/>
-            <UserOption icon={<AiOutlineHeart />} label="Favorites" onClick={console.log}/>
-            <UserOption icon={<AiOutlineBook />} label="Recently Visited" onClick={console.log}/>
-            <DropdownMenuSeparator />
             <UserOption icon={<PiSignOutBold className="text-red-600" />} label="Sign Out" onClick={onLogout}/>
           </DropdownMenuContent>
         </DropdownMenu>

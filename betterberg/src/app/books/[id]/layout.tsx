@@ -1,5 +1,6 @@
 "use client"
 
+import BottomBar from "@/components/BookText/BottomBar";
 import BookByIdProvider from "@/context/bookById.provider";
 
 export default function BookLayout({
@@ -9,6 +10,7 @@ export default function BookLayout({
 }>) {
   return (
     <BookByIdProvider>
+      <BottomBar />
       {children}
     </BookByIdProvider>
   );

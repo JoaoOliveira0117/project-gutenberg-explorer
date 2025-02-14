@@ -1,4 +1,4 @@
-import BookTextContainer from "@/components/BookText/BookTextContainer";
+import BookTextContainer from "@/components/BookText/Container";
 
 export default async function Page({
   params,

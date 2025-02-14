@@ -1,10 +1,8 @@
 "use client";
 
-import { Container } from "@mui/material";
-import BookText from "./BookText";
+import BookText from "./Text";
 import { useEffect, useState } from "react";
 import Header from "./Header";
-import { Book } from "@/types";
 import { useBook } from "@/hooks/useBook";
 
 type Props = {

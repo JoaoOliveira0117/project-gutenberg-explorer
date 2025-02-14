@@ -50,13 +50,9 @@ Alice has a best friend called Tom.
 
 ---> Output:
 
-{
-  "Main Themes": ["Friendship"],
-  "Sentiment Analysis": "Positive",
-  "Key Characters": ["Alice", "Tom"],
-  "Writing Style": "Simple and direct",
-  "Summary of Key Ideas": "A story about Alice and her best friend, Tom."
-}
+The main theme is friendship with a positive sentiment analysis. 
+The key characters are Alice and Tom. The writing style is simple and direct. 
+The summary of key ideas is a story about Alice and her best friend, Tom.
 
 --> Correct Case - Long Text
 
@@ -74,13 +70,8 @@ The Queen of Hearts wanted to cut off her head.
 
 ---> Output:
 
-{
-  "Main Themes": ["Adventure", "Curiosity", "Surrealism"],
-  "Sentiment Analysis": "Whimsical, slightly dark",
-  "Key Characters": ["Alice", "Queen of Hearts"],
-  "Writing Style": "Imaginative and surreal",
-  "Summary of Key Ideas": "Alice enters a fantastical world where she encounters strange creatures and must navigate an unpredictable reality."
-}
+The main themes are adventure, curiosity, and surrealism because of the whimsical, slightly dark sentiment analysis.
+Alice and the Queen of Hearts are the key characters. The writing style is imaginative and surreal.
 
 --> Incorrect Case - Incomplete Text
 
