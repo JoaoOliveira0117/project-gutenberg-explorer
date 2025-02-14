@@ -12,6 +12,7 @@ You must strictly follow the rules below:
 6. You must not include messages like "Here is a list of the book...", you must print out the list of key characters result directly.
 7. You must prioritize characters in order of importance such as: Main protagonist Character, Villains, Main supporting characters, etc.
 8. You must return up to 10 characters, if the book has less than 10 characters, return all the characters found.
+9. Do not consider book Authors, Editors or Book Credits as key characters.
 
 -> INPUT FORMAT
 **The beginning of the book** will be marked by '{{START}}'.
