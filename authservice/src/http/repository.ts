@@ -6,7 +6,7 @@ export class Repository {
     console.log(error.code)
     return new HttpError(
       error.message,
-      "Last Seen Repository",
+      "Repository",
       [error.message, error.details],
       error,
       500

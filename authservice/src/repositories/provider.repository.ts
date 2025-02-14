@@ -27,7 +27,7 @@ export default class ProviderRepository extends Repository {
     return new ProviderRepository(database);
   }
 
-  async findProvider(query: ProviderRequest): Promise<ProviderResponse> {
+  async findProvider(query: ProviderRequest, throwable = true): Promise<ProviderResponse> {
     const { error, data } = await this.db.select().eq('provider_id', query.provider_id).eq('user_id', query.user_id).single();
 
     if (error) {

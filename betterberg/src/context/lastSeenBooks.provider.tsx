@@ -114,7 +114,7 @@ const LastSeenBooksProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     getBooks()
-  }, [getBooks])
+  }, [])
 
   return (
     <LastSeenBooksContext.Provider value={

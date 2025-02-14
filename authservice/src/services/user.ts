@@ -26,7 +26,9 @@ export default class UserService {
   }
 
   async oauth(providerId: string, user: { email: string }) {
-    const userRecord = await this.userRepository.findUserByEmail(user.email);
+    const userRecord = await this.userRepository.findUserByEmail(user.email, false);
+
+    console.log(userRecord)
 
     if (!userRecord) {
       const newUser = await this.userRepository.createUser({ email: user.email });
@@ -35,7 +37,7 @@ export default class UserService {
       return newUser;
     }
 
-    const providerRecord = await this.providerRepository.findProvider({ provider_id: providerId, user_id: userRecord.id});
+    const providerRecord = await this.providerRepository.findProvider({ provider_id: providerId, user_id: userRecord.id}, false);
 
     if (!providerRecord) {
       await this.providerRepository.createProvider({ provider_id: providerId, user_id: userRecord.id });

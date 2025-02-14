@@ -25,10 +25,10 @@ export default class UserRepository extends Repository {
     this.db = db.from('users');
   }
 
-  async findUserByEmail(email: string): Promise<UserResponse> {
+  async findUserByEmail(email: string, throwable = true): Promise<UserResponse> {
     const { error, data } = await this.db.select().eq('email', email).single();
 
-    if (error) {
+    if (error && throwable) {
       throw this.handleError(error);
     }
 
