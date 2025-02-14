@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { decodeToken } from '../utils/security.js';
 import Unauthorized from '../http/errors/unauthorized.error.js';
 import Secrets from '../config/secrets.js';
 

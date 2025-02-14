@@ -35,8 +35,6 @@ export default class ApiClient {
       const url = this.getUrl(endpoint);
       const parsedBody = this.getBody(body);
 
-      console.log(url)
-
       const response = await this.client(url, {
         cache: "no-store",
         method: "GET",

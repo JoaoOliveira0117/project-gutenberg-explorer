@@ -20,8 +20,6 @@ export const authMiddleware = async (
 
     const decoded = await decodeToken(token);
 
-    console.log(decoded)
-
     req.user = decoded;
     next();
   } catch (err: unknown) {

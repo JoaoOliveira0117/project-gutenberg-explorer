@@ -16,8 +16,6 @@ export default class BooksService extends Service {
 
     const filterParam = filter? `/${filter}` : ''
 
-    console.log(filterParam)
-
     const response = this.client.get(`api/${user_id}/books${filterParam}${queryString}`, {
       headers: await this.getHeaders()
     });

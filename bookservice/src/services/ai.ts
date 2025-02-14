@@ -87,7 +87,6 @@ export default class AiService {
 
   async getBookKeyCharacters(text: string) {
     const messages = this.getMessages(KeyCarachters.prompt, text);
-    console.log(messages)
     
     const response = await this.client.chat.completions.create({
       model: 'llama3-70b-8192',

@@ -1,5 +1,4 @@
 export default function toQueryString(params: Record<string, any>): string {
-  console.log(params)
   const query = Object.entries(params)
     .filter(([, value]) => value !== undefined && value !== null) // Remove undefined e null
     .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)

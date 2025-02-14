@@ -47,8 +47,6 @@ export default class FavoritesRepository extends Repository {
   async removeFavorite(favorite: FavoritesRequest): Promise<FavoritesResponse> {
     await this.booksRepository.findBookById(favorite.book_id, favorite.user_id);
 
-    console.log(favorite)
-
     const { error, data } = await this.db.delete()
       .eq('user_id', favorite.user_id)
       .eq('book_id', favorite.book_id)

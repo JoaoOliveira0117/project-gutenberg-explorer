@@ -6,7 +6,7 @@ export default function withErrorHandler(handler: (req: NextRequest, res?: any) 
     try {
       return await handler(req, res);
     } catch (error) {
-      console.log(error)
+      console.error(error)
       if (error instanceof HttpError) {
         return NextResponse.json(error.toJson(), { status: error.statusCode });
       }

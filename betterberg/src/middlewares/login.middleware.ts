@@ -16,7 +16,6 @@ export default async function loginMiddleware(req: NextRequest) {
     'Authorization': 'Bearer ' + queryToken,
   })
 
-  console.log(queryToken)
   cookies.setValue('token', queryToken)
   
   return NextResponse.redirect(new URL('/books', req.url))

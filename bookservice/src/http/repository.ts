@@ -3,7 +3,6 @@ import HttpError from "./error.js";
 
 export class Repository {
   handleError(error: PostgrestError) {
-    console.log(error.code)
     return new HttpError(
       error.message,
       "Last Seen Repository",
