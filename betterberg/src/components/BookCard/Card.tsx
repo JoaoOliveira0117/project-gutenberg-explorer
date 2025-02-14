@@ -31,6 +31,8 @@ const BookCard: React.FC<Props> = ({ book, addFavorite, removeFavorite, onClickR
         <Image
           src={`https://www.gutenberg.org/cache/epub/${book.book_id}/pg${book.book_id}.cover.medium.jpg`}
           alt={book.title}
+          width={200}
+          height={300}
           className="object-contain h-full w-full shadow-lg"
         />
       </div>

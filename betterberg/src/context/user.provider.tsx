@@ -71,7 +71,7 @@ const UserProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     getUserMe();
-  }, [getUserMe]);
+  }, []);
 
   return (
     <UserContext.Provider value={

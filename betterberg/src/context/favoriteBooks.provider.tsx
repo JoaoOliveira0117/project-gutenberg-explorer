@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useCallback, useEffect, useState } from "react"
+import { createContext, ReactNode, useEffect, useState } from "react"
 import { Book } from "@/types";
 import { useFetch } from "@/hooks/useFetch";
 
@@ -36,7 +36,7 @@ const FavoriteBooksProvider: React.FC<Props> = ({ children }) => {
 
   const fetcher = useFetch()
 
-  const getBooks = useCallback(async () => {
+  const getBooks = async () => {
     if (isLoading || isFetching) return;
 
     setBooks([])
@@ -52,7 +52,7 @@ const FavoriteBooksProvider: React.FC<Props> = ({ children }) => {
         setIsFetching(false)
         setIsLoading(false)
       })
-  }, [isLoading, isFetching, fetcher, setError, setBooks, setIsFetching, setIsLoading])
+  }
   
   const favoriteBook = async (id: string, callback: (v: boolean) => void) => {
     if (isLoading || isFetching) return;
@@ -113,7 +113,7 @@ const FavoriteBooksProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     getBooks()
-  }, [getBooks])
+  }, [])
 
   return (
     <FavoriteBooksContext.Provider value={
