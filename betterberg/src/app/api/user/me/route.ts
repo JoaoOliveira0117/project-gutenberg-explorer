@@ -1,7 +1,7 @@
 import UserService from "@/services/userService";
 import withErrorHandler from "@/utils/withErrorHandler";
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export const dynamic = 'force-dynamic'
 
