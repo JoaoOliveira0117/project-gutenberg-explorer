@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { TypeAnimation } from 'react-type-animation';
 
 interface TypingEffectProps {

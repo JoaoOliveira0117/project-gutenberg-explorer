@@ -5,6 +5,7 @@ import Tags from "./Tags";
 import { Button } from "../ui/button";
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { useState } from "react";
+import Image from "next/image";
 
 type Props = {
   book: Book;
@@ -27,7 +28,7 @@ const BookCard: React.FC<Props> = ({ book, addFavorite, removeFavorite, onClickR
   return (
     <Card className="w-full max-w-xs flex flex-col items-center p-2 shadow-md rounded-lg">
       <div className="h-56 overflow-hidden flex justify-center items-center shadow-lg rounded-lg my-6">
-        <img
+        <Image
           src={`https://www.gutenberg.org/cache/epub/${book.book_id}/pg${book.book_id}.cover.medium.jpg`}
           alt={book.title}
           className="object-contain h-full w-full shadow-lg"

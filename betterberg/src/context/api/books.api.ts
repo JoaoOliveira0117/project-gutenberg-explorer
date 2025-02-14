@@ -1,4 +1,5 @@
 import HttpError from "@/http/error";
+import toQueryString from "@/utils/toQueryString";
 
 const endpoint = "/api/books";
 
@@ -31,12 +32,8 @@ const call = async (url: string, method = 'GET') => {
 }
 
 export const getAllBooks = async (search?: string, page = 1, pageSize = 25) => {
-  const query = new URLSearchParams({
-    search: search || "",
-    page: String(page) || "",
-    pageSize: String(pageSize) || ""
-  })
-  return call(`${endpoint}`)
+  const query = toQueryString({ search, page, pageSize });
+  return call(`${endpoint}${query}`)
 }
 
 export const getBookById = async (bookId: string) => {

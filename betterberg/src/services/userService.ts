@@ -1,6 +1,5 @@
 import ApiService from "@/http/apiService";
 import Cookies from "@/http/cookies";
-import { NextRequest, NextResponse } from "next/server";
 
 export default class UserService extends ApiService {
   protected static instance: UserService;

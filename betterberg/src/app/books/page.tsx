@@ -7,7 +7,7 @@ export default function Books() {
 
   useEffect(() => {
     router.replace("/books/all");
-  }, []);
+  }, [router]);
 
   return <></>;
 }

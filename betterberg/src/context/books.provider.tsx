@@ -1,8 +1,6 @@
-import { createContext, ReactNode, useEffect, useState } from "react"
+import { createContext, ReactNode, useCallback, useEffect, useState } from "react"
 import { Book } from "@/types";
-import { getAllBooks } from "./api/books.api";
 import { useFetch } from "@/hooks/useFetch";
-import { useRouter } from "next/navigation";
 import toQueryString from "@/utils/toQueryString";
 
 type BooksContextType = {
@@ -50,7 +48,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
 
   const fetcher = useFetch()
 
-  const getBooks = async () => {
+  const getBooks = useCallback(async () => {
     if (isLoading || isFetching) return;
 
     setBooks([])
@@ -72,9 +70,9 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
         setIsFetching(false)
         setIsLoading(false)
       })
-  }
+  }, [isLoading, isFetching, query, fetcher, setBooks, setError, setIsFetching, setIsLoading])
 
-  const getMoreBooks = async () => {
+  const getMoreBooks = useCallback(async () => {
     if (isLoading || isFetching) return;
 
     setBooks([])
@@ -94,7 +92,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
       .finally(() => {
         setIsFetching(false)
       })
-  }
+  }, [isLoading, isFetching, page, query, fetcher, setBooks, setError, setIsFetching])
 
   const favoriteBook = async (id: string, callback: (v: boolean) => void) => {
     if (isLoading || isFetching) return;
@@ -155,7 +153,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     getBooks()
-  }, [query])
+  }, [query, getBooks])
 
   return (
     <BooksContext.Provider value={

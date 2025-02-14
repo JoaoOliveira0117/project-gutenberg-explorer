@@ -7,7 +7,7 @@ export default function Custom404() {
 
   useEffect(() => {
     router.replace("/books");
-  }, []);
+  }, [router]);
 
   return <></>;
 }

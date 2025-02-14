@@ -1,7 +1,7 @@
 "use client";
 
 import BookText from "./Text";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Header from "./Header";
 import { useBook } from "@/hooks/useBook";
 
@@ -14,7 +14,7 @@ const BookTextContainer: React.FC<Props> = ({ id }) => {
 
   useEffect(() => {
     setId(id);
-  }, [id]);
+  }, [id, setId]);
 
   if (!book) {
     return null;

@@ -69,7 +69,7 @@ export default function BottomBar() {
         ))}
       </div>
 
-      {AiButtons.map(({label, icon}, index) => (
+      {AiButtons.map(({label}, index) => (
         <Dialog key={index} open={openModal === index} onOpenChange={() => setOpenModal(null)}>
           <DialogContent className="max-w-xl">
             <DialogHeader>

@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { AiOutlineUser, AiOutlineHeart, AiOutlineBook } from "react-icons/ai";
+import { AiOutlineUser } from "react-icons/ai";
 import { PiSignOutBold } from "react-icons/pi";
-import { DropdownMenu, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuContent } from "../ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from "../ui/dropdown-menu";
 import UserOption from "./Option";
 
 type Props = {

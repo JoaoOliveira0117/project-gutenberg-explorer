@@ -1,6 +1,5 @@
-import { createContext, ReactNode, useEffect, useState } from "react"
+import { createContext, ReactNode, useCallback, useEffect, useState } from "react"
 import { Book } from "@/types";
-import { getBookById } from "./api/books.api";
 import { useFetch } from "@/hooks/useFetch";
 
 type BookByIdContextType = {
@@ -32,7 +31,7 @@ const BookByIdProvider: React.FC<Props> = ({ children }) => {
 
   const fetcher = useFetch()
 
-  const getBook = async () => {
+  const getBook = useCallback(async () => {
     if (isLoading || isFetching) return;
 
     setBook(null)
@@ -48,12 +47,12 @@ const BookByIdProvider: React.FC<Props> = ({ children }) => {
         setIsFetching(false)
         setIsLoading(false)
       })
-  }
+  }, [isLoading, isFetching, id, fetcher, setBook, setIsFetching, setIsLoading, setError])
 
   useEffect(() => {
     if (!id) return;
     getBook();
-  }, [id])
+  }, [id, getBook])
 
   return (
     <BookByIdContext.Provider value={

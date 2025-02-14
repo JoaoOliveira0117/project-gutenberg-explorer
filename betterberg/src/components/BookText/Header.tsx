@@ -20,7 +20,7 @@ const BookTextHeader: React.FC<Props> = ({ book }) => {
     router.push('/books')
   }
 
-  const formattedAuthors = book.authors.map((author, index) => {
+  const formattedAuthors = book.authors.map((author) => {
     return author
       .replace(/\s*\d{3,4}-\d{3,4}/g, "")
       .replace(/\s*\[Editor\]/g, "")
