@@ -1,5 +1,13 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Before start
+
+Make sure you have the gateway installed and running, then put the URL like the .env below.
+
+```sh
+NEXT_PUBLIC_API_URL="http://localhost:8000"
+```
+
 ## Getting Started
 
 First, run the development server:

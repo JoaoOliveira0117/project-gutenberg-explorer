@@ -4,9 +4,10 @@ import { CgSpinner } from "react-icons/cg";
 
 type Props = {
   id: string;
+  setTextLoaded: (v: boolean) => void;
 }
 
-const BookText: React.FC<Props> = ({ id }) => {
+const BookText: React.FC<Props> = ({ id, setTextLoaded }) => {
   const [text, setText] = useState('')
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -23,6 +24,7 @@ const BookText: React.FC<Props> = ({ id }) => {
       })
       .finally(() => {
         setIsLoading(false)
+        setTextLoaded(true)
       })
   }, [id])
 

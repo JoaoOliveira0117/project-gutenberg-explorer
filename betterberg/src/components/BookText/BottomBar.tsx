@@ -6,14 +6,15 @@ import { Button } from "@/components/ui/button";
 import { AiOutlineBulb, AiOutlineFileText, AiOutlineGlobal, AiOutlineSmile, AiOutlineUser } from "react-icons/ai";
 import { useBook } from "@/hooks/useBook";
 import TypingEffect from "./TypingTextEffect";
+import { CgSpinner } from "react-icons/cg";
 
 export default function BottomBar() {
-  const { book } = useBook()
+  const { book, isFetching, isLoading, textLoaded } = useBook()
   const [openModal, setOpenModal] = useState<number | null>(null);
   const [response, setResponse] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  
+
   const AiButtons = [
     {
       "label": "Summarize Text",
@@ -57,6 +58,12 @@ export default function BottomBar() {
     } finally {
       setLoading(false);
     }
+  }
+  
+  if (!book || !textLoaded || isFetching || isLoading) {
+    return (<div className="max-w-6xl mx-auto mt-12">
+      <CgSpinner size={64} className="animate-spin min-h-8 min-w-8 text-blue-600 m-auto" />
+    </div>)
   }
 
   return (

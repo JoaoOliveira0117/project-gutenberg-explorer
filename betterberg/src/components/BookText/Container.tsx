@@ -1,7 +1,7 @@
 "use client";
 
 import BookText from "./Text";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "./Header";
 import { useBook } from "@/hooks/useBook";
 import { CgSpinner } from "react-icons/cg";
@@ -11,8 +11,8 @@ type Props = {
 }
 
 const BookTextContainer: React.FC<Props> = ({ id }) => {
-  const { book, isLoading, error, setId } = useBook();
-
+  const { book, isLoading, error, setId, setTextLoaded } = useBook();
+  
   useEffect(() => {
     setId(id);
   }, [id, setId]);
@@ -39,7 +39,7 @@ const BookTextContainer: React.FC<Props> = ({ id }) => {
     <>
       <Header book={book} />
       <article className="max-w-6xl mx-auto my-6 mb-28 shadow-lg rounded-md border">
-        <BookText id={book.book_id || ""} />
+        <BookText id={book.book_id || ""} setTextLoaded={setTextLoaded} />
       </article>
     </>
   );

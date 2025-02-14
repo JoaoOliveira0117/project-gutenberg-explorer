@@ -19,32 +19,35 @@ content = content_response.text
 metadata_response = requests.get(metadata_url)
 ```
 
+- [x] Used instead guthenberg's pg_catalog.csv to extract metadata.
+
 ### **Requirements**
 
 **⚙️ Core Functionality** 
 
 - [] Input field for users to enter a Project Gutenberg book ID.
-- [] Fetch and display the book's text and metadata.
-- [] Save the book text and metadata for future access.
-- [] Provide a list view of all books the user has previously accessed.
+  - [x] made instead a search bar that searches for the book's title, subject or tag matching the text.
+- [x] Fetch and display the book's text and metadata.
+- [x] Save the book text and metadata for future access.
+- [x] Provide a list view of all books the user has previously accessed.
 
 🧠 **Text Analysis**
 
 Given the text the user should be able to perform text analysis. You are free to choose what analysis you find most interesting but some could be:
 
-- [] Identify key characters
-- [] Language Detection
-- [] Sentiment Analysis
-- [] Plot Summary
-- [] Something else?
+- [x] Identify key characters
+- [x] Language Detection
+- [x] Sentiment Analysis
+- [x] Plot Summary
+- [x] Something else? ( Semantic Analysis )
 
 💅 **Styling**
 
-Style it as you see fit. We personally really like tailwind and Shadcn.
+- used Shadcn and tailwindCSS;
 
 👨‍💻  **Deliverables**
 
-- [] Deploy the application to the internet
-- [] Integrate an LLM for text analysis (you have flexibility in choosing the specific model).
-- [] Store source code in Github
-- [] Create a loom that walks a user through the application and explains any technical choices
+- [x] Deploy the application to the internet
+- [x] Integrate an LLM for text analysis (you have flexibility in choosing the specific model).
+- [x] Store source code in Github
+- [x] Create a loom that walks a user through the application and explains any technical choices

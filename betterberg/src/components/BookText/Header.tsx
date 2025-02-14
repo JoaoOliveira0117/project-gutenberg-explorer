@@ -1,9 +1,9 @@
-import { ArrowLeft } from "@mui/icons-material";
 import { Book } from "@/types";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import Tags from "./Tags";
 import Text from "../dummies/Text";
+import { ArrowLeft } from "lucide-react";
 
 type Props = {
   book: Book;
