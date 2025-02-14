@@ -9,17 +9,9 @@ export default class Cookies {
     this.cookieJar = cookieJar;
   }
 
-  private static async initialize() {
+  static async initialize() {
     const cookieJar = await cookies()
     return new Cookies(cookieJar);
-  }
-
-  public static async getInstance() {
-    if (!Cookies.instance) {
-      Cookies.instance = await Cookies.initialize();
-    }
-
-    return Cookies.instance;
   }
 
   public getValue(name: string) {

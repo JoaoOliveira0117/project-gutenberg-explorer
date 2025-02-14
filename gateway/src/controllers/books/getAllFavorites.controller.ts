@@ -3,9 +3,9 @@ import BooksController from "./books.controller.js";
 
 class GetAllFavoritesBooks extends BooksController {
   async handle() {
-    const { skip = 0, take = 25 } = this.getPagination();
+    const { page, pageSize } = this.query as { page: string, pageSize: string }
 
-    return this.service.getBooks({ ...this.query, skip, take }, this.user.id, 'favorites');
+    return this.service.getBooks({ ...this.query, page, pageSize }, this.user.id, 'favorites');
   }
 }
 

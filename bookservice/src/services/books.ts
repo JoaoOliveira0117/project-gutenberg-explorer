@@ -21,8 +21,8 @@ export default class BooksService {
     return this.repository.findAllFavoriteBooks(user_id, fields, page, pageSize);
   }
 
-  async findAllLastSeenBooks(user_id: string, fields?: string, page?: number, pageSize?: number) {
-    return this.repository.findAllLastSeenBooks(user_id, fields, page, pageSize);
+  async findAllLastSeenBooks(user_id: string, fields?: string) {
+    return this.repository.findAllLastSeenBooks(user_id, fields);
   }
 
   async findBookById(id: string, user_id: string, fields?: string) {

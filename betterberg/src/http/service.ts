@@ -10,7 +10,7 @@ export default class Service {
   }
 
   protected static async initialize() {
-    const cookies = await Cookies.getInstance();
+    const cookies = await Cookies.initialize();
     return new Service(cookies);
   }
 

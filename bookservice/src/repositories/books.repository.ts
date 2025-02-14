@@ -59,7 +59,7 @@ export default class BooksRepository extends Repository {
       result = result.or(conditions.join(","));
     }
 
-    const { error, data } = await result.range(page - 1, page + pageSize).returns<BookResponse[]>();
+    const { error, data } = await result.range(page - 1, page + (pageSize - 1 )).returns<BookResponse[]>();
 
     if (error) {
       throw this.handleError(error);
@@ -72,11 +72,11 @@ export default class BooksRepository extends Repository {
     const selectFields = fields || "*";
 
     let result = this.db
-      .select(`user_favorite_books!inner(book_id), ${selectFields}`)
+      .select(`user_favorite_books!inner(book_id,created_at), ${selectFields}`)
       .eq('user_favorite_books.user_id', user_id)
-      .order('created_at', { referencedTable: 'user_favorite_books', ascending: false })
+      .order('user_favorite_books(created_at)', { ascending: true })
 
-    const { error, data } = await result.range(page - 1, page + pageSize).returns<BookResponse[]>();
+    const { error, data } = await result.range(page - 1, page + (pageSize - 1 )).returns<BookResponse[]>();
 
     if (error) {
       throw this.handleError(error);
@@ -85,16 +85,15 @@ export default class BooksRepository extends Repository {
     return data;
   }
   
-  async findAllLastSeenBooks(user_id: string, fields?: string, page = 1, pageSize = 25): Promise<BookResponse[]> {
+  async findAllLastSeenBooks(user_id: string, fields?: string): Promise<BookResponse[]> {
     const selectFields = fields || "*";
 
     let result = this.db
-      .select(`user_last_seen_books!inner(book_id), ${selectFields}`)
+      .select(`user_last_seen_books!inner(book_id,created_at), ${selectFields}`)
       .eq('user_last_seen_books.user_id', user_id)
-      .order('created_at', { referencedTable: 'user_last_seen_books', ascending: false })
-      .limit(5)
+      .order('user_last_seen_books(created_at)', { ascending: false })
 
-    const { error, data } = await result.range(page - 1, page + pageSize).returns<BookResponse[]>();
+    const { error, data } = await result.limit(10).returns<BookResponse[]>();
 
     if (error) {
       throw this.handleError(error);
@@ -130,7 +129,7 @@ export default class BooksRepository extends Repository {
     const { error, data } = await this.db
      .select(`user_favorite_books!right(book_id), ${selectFields}`)
      .eq('user_favorite_books.user_id', user_id)
-     .range(page - 1, page + pageSize)
+     .range(page - 1, page + (pageSize - 1 ))
      .returns<BookResponse[]>();
 
     if (error) {

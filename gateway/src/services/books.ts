@@ -1,4 +1,5 @@
 import Service from "../http/service.js";
+import toQueryString from "../utils/toQueryString.js";
 
 export default class BooksService extends Service {
   constructor() {
@@ -10,31 +11,25 @@ export default class BooksService extends Service {
     return response.json();
   }
 
-  async getBooks(query: { search?: string, fields?: string | string[], skip: number, take: number }, user_id: string, filter?: 'favorites' | 'last-seen') {
-    const { search, fields, skip, take } = query;
-    const searchParams: Record<string, string> = {};
+  async getBooks(query: { search?: string, fields?: string | string[], page?: string, pageSize?: string }, user_id: string, filter?: 'favorites' | 'last-seen') {
+    const queryString = toQueryString(query)
 
-    searchParams.skip = String(skip);
-    searchParams.take = String(take);
-    if (search) searchParams.search = search;
-    if (fields) searchParams.fields = typeof fields === "string" ? fields : fields?.join(",");
-    const urlFilter = filter ? '/' + filter : ''
+    const filterParam = filter? `/${filter}` : ''
 
-    const response = this.client.get(`api/${user_id}/books${urlFilter}`, {
-      headers: await this.getHeaders(),
-      searchParams 
+    console.log(filterParam)
+
+    const response = this.client.get(`api/${user_id}/books${filterParam}${queryString}`, {
+      headers: await this.getHeaders()
     });
 
     return response.json();
   }
 
   async getBookById(id: string, user_id: string, fields?: string[]) {
-    const searchParams: Record<string, string> = {};
+    const queryString = toQueryString({ fields })
 
-    if (fields) searchParams.fields = typeof fields === "string" ? fields : fields?.join(",");
-    const response = this.client.get(`api/${user_id}/books/${id}`, {
-      headers: await this.getHeaders(),
-      searchParams
+    const response = this.client.get(`api/${user_id}/books/${id}${queryString}`, {
+      headers: await this.getHeaders()
     })
 
     return response.json();

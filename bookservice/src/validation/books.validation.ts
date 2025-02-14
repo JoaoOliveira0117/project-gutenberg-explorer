@@ -9,8 +9,8 @@ export const userValidation = z.object({
 
 export const getAllValidation = z.object({
   query: z.object({
-    page: z.coerce.number().int(),
-    pageSize: z.coerce.number().int(),
+    page: z.string(),
+    pageSize: z.string(),
     search: z.string(),
     fields: z.string(),
     user_id: z.string()

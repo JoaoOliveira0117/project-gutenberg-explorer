@@ -35,7 +35,7 @@ export const BooksContext = createContext<BooksContextType>({
 
 const BooksProvider: React.FC<Props> = ({ children }) => {
   const START_PAGE = 1;
-  const PAGE_SIZE = 25;
+  const PAGE_SIZE = 2;
 
   const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -99,10 +99,6 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     getBooks()
   }, [query])
-
-  useEffect(() => {
-    getMoreBooks()
-  }, [page])
 
   return (
     <BooksContext.Provider value={

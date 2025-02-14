@@ -10,7 +10,7 @@ export default class UserService extends ApiService {
   }
 
   protected static async initialize() {
-    const cookies = await Cookies.getInstance();
+    const cookies = await Cookies.initialize();
     return new UserService(cookies);
   }
 

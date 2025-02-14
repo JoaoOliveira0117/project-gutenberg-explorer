@@ -19,6 +19,7 @@ export default class Rest {
     this.method = req.method;
     this.headers = req.headers;
     this.user = req.user;
+    console.log(req.query)
   }
 
   getMappedQuery(map: Record<string, (value: string) => Record<string, unknown>>) {

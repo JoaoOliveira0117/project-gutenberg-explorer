@@ -33,18 +33,12 @@ export default class ApiClient {
       const url = this.getUrl(endpoint);
       const parsedBody = this.getBody(body);
       const response = await this.client(url, {
+        cache: "no-cache",
         method: "GET",
         headers: this.getHeaders(),
         ...options,
         ...parsedBody,
       });
-
-      console.log({
-        method: "GET",
-        headers: this.getHeaders(),
-        ...options,
-        ...parsedBody,
-      })
 
       if (!response.ok) {
         if (response.headers.get("content-type")?.includes("application/json")) {
