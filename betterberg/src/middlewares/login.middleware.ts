@@ -1,22 +1,21 @@
-import Cookies from '@/http/cookies'
-import UserService from '@/services/userService';
-import { NextResponse, type NextRequest } from 'next/server'
- 
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+
 export default async function loginMiddleware(req: NextRequest) {
-  const queryToken = req.nextUrl.searchParams.get('token')
-  const cookies = await Cookies.initialize()
+  const queryToken = req.nextUrl.searchParams.get("token");
 
   if (!queryToken) {
     return;
   }
 
-  const service = await UserService.getInstance()
+  const res = NextResponse.redirect(new URL("/books", req.url));
 
-  await service.getUserByToken({
-    'Authorization': 'Bearer ' + queryToken,
-  })
+  res.cookies.set("token", queryToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    path: "/",
+  });
 
-  cookies.setValue('token', queryToken)
-  
-  return NextResponse.redirect(new URL('/books', req.url))
+  return res;
 }

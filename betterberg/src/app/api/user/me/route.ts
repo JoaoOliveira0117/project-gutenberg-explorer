@@ -1,13 +1,18 @@
 import UserService from "@/services/userService";
 import withErrorHandler from "@/utils/withErrorHandler";
-import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = 'force-dynamic'
 
-async function getUserMe() {
-  const service = await UserService.getInstance()
-  const data = await service.getUserMe();
-  return NextResponse.json(data);
+async function getUserMe(req: NextRequest) {
+  const cookieJar = await cookies()
+  const token = cookieJar.get("token")?.value;
+  const service = await UserService.getInstance();
+  const data = await service.getUserByToken({
+    headers: { 'Authorization': `Bearer ${token}` },
+  });
+  return NextResponse.json(data, { headers: { "Cache-Control": "no-store" } });
 }
 
 export const GET = withErrorHandler(getUserMe)

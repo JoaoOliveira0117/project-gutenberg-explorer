@@ -44,6 +44,7 @@ const UserProvider: React.FC<Props> = ({ children }) => {
       cache: 'no-store'
     }))
       .then((data) => {
+        console.log(data)
         setUser(data.result)
       })
       .catch(setError)
@@ -60,7 +61,9 @@ const UserProvider: React.FC<Props> = ({ children }) => {
     setIsFetching(true)
     setIsLoading(true)
 
-    return fetcher(fetch('/api/user/logout'))
+    return fetcher(fetch('/api/user/logout', {
+      cache: 'no-store'
+    }))
       .then(() => {
         router.replace('/login')
       })

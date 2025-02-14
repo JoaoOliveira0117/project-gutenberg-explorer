@@ -21,39 +21,39 @@ export default class BookService extends ApiService {
     return BookService.instance;
   }
 
-  getBooks(query?: string) {
-    return this.get("/api/books" + query);
+  getBooks(query?: string, headers?: { [key: string]: any }) {
+    return this.get("/api/books" + query, headers);
   }
 
-  getBookById(id: string, query?: string) {
-    return this.get(`/api/books/${id}` + query);
+  getBookById(id: string, query?: string, headers?: { [key: string]: any }) {
+    return this.get(`/api/books/${id}` + query, headers);
   }
 
-  putBookFavorite(id: string) {
-    return this.put(`/api/books/${id}/favorite`, {});
+  putBookFavorite(id: string, headers?: { [key: string]: any }) {
+    return this.put(`/api/books/${id}/favorite`, {}, headers);
   }
 
-  deleteBookFavorite(id: string) {
-    return this.delete(`/api/books/${id}/favorite`);
+  deleteBookFavorite(id: string, headers?: { [key: string]: any }) {
+    return this.delete(`/api/books/${id}/favorite`, headers);
   }
 
-  aiSummarizeBook(id: string) {
-    return this.get(`/api/books/${id}/ai/summarize`);
+  aiSummarizeBook(id: string, headers?: { [key: string]: any }) {
+    return this.get(`/api/books/${id}/ai/summarize`, headers);
   }
 
-  aiDetectLanguagesOfBook(id: string) {
-    return this.get(`/api/books/${id}/ai/language-detection`);
+  aiDetectLanguagesOfBook(id: string, headers?: { [key: string]: any }) {
+    return this.get(`/api/books/${id}/ai/language-detection`, headers);
   }
 
-  aiGetKeyCharactersOfBook(id: string) {
-    return this.get(`/api/books/${id}/ai/key-characters`);
+  aiGetKeyCharactersOfBook(id: string, headers?: { [key: string]: any }) {
+    return this.get(`/api/books/${id}/ai/key-characters`, headers);
   }
 
-  aiDetectSentimentOfBook(id: string) {
-    return this.get(`/api/books/${id}/ai/sentiment-analysis`);
+  aiDetectSentimentOfBook(id: string, headers?: { [key: string]: any }) {
+    return this.get(`/api/books/${id}/ai/sentiment-analysis`, headers);
   }
 
-  aiAnalyzeSemanticsOfBook(id: string) {
-    return this.get(`/api/books/${id}/ai/semantic-analysis`);
+  aiAnalyzeSemanticsOfBook(id: string, headers?: { [key: string]: any }) {
+    return this.get(`/api/books/${id}/ai/semantic-analysis`, headers);
   }
 }

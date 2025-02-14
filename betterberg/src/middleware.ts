@@ -1,5 +1,4 @@
 import type { NextRequest } from 'next/server'
-import authMiddleware from './middlewares/auth.middleware';
 import loginMiddleware from './middlewares/login.middleware';
  
 export async function middleware(request: NextRequest) {
@@ -7,8 +6,6 @@ export async function middleware(request: NextRequest) {
 
   if (url.startsWith('/login')) {
     return loginMiddleware(request);
-  } else {
-    return authMiddleware(request);
   }
 }
 

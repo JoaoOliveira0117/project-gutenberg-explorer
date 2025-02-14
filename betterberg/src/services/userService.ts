@@ -21,10 +21,8 @@ export default class UserService extends ApiService {
     return UserService.instance;
   }
 
-  getUserByToken(headers?: { [key: string]: string }) {
-    return this.get("/api/user/me", {
-      headers: headers
-    });
+  getUserByToken(headers?: { [key: string]: any }) {
+    return this.get("/api/user/me", headers);
   }
 
   getUserMe() {
