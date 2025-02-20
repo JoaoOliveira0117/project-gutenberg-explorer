@@ -2,7 +2,6 @@ import { createContext, ReactNode, useEffect, useState } from "react"
 import { Book } from "@/types";
 import { useFetch } from "@/hooks/useFetch";
 import toQueryString from "@/utils/toQueryString";
-import HttpError from "@/http/error";
 
 type BooksContextType = {
   books: Book[];

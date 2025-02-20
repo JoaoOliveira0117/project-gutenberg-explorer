@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation'
 import Card from "./Card";
 import { Book } from '@/types';
-import { CgSpinner } from 'react-icons/cg';
 import BookCardSkeleton from './CardSkeleton';
 
 type Props = {
