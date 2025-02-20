@@ -72,6 +72,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
       })
       .catch(setError)
       .finally(() => {
+        setError(null)
         setIsFetching(false)
         setIsLoading(false)
       })
@@ -95,6 +96,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
       })
       .catch(setError)
       .finally(() => {
+        setError(null)
         setIsFetching(false)
       })
   }
@@ -123,6 +125,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
         callback(false)
       })
       .finally(() => {
+        setError(null)
         setIsFetching(false)
       })
   }
@@ -148,6 +151,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
         callback(true)
       })
       .finally(() => {
+        setError(null)
         setIsFetching(false)
       })
   }

@@ -49,6 +49,7 @@ const BookByIdProvider: React.FC<Props> = ({ children }) => {
       })
       .catch(setError)
       .finally(() => {
+        setError(null)
         setIsFetching(false)
         setIsLoading(false)
       })

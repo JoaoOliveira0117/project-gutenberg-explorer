@@ -49,6 +49,7 @@ const LastSeenBooksProvider: React.FC<Props> = ({ children }) => {
       })
       .catch(setError)
       .finally(() => {
+        setError(null)
         setIsFetching(false)
         setIsLoading(false)
       })
@@ -76,6 +77,7 @@ const LastSeenBooksProvider: React.FC<Props> = ({ children }) => {
       })
       .catch((err) => {
         setError(err)
+        setError(null)
         callback(false)
       })
       .finally(() => {
@@ -104,6 +106,7 @@ const LastSeenBooksProvider: React.FC<Props> = ({ children }) => {
         callback(true)
       })
       .finally(() => {
+        setError(null)
         setIsFetching(false)
       })
   }
