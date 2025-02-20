@@ -1,17 +1,17 @@
 'use client'
 import { useFavoriteBooks } from "@/hooks/useFavoriteBooks";
 import BookCardGrid from "./BookCard/Grid";
+import TryAgain from "./TryAgain/TryAgain";
 
 export default function FavoriteBooks() {
-  const { books, isLoading, error, favoriteBook, removeFavoriteBook } = useFavoriteBooks();
+  const { books, isLoading, isFetching, error, favoriteBook, removeFavoriteBook, getBooks } = useFavoriteBooks();
   
   if (error) return (
-    <div className="max-w-6xl mx-auto mt-12">
-      <h1 className="text-4xl text-center text-red-600">An error occurred while fetching books</h1>
-    </div>
+    <TryAgain onTryAgain={() => getBooks()} isLoading={isLoading || isFetching} />
   )
 
-  if (!books.length) return (
+
+  if (!isLoading && !isFetching && !books.length) return (
     <div className="max-w-6xl mx-auto mt-12">
       <h1 className="text-lg text-center text-gray-400">No favorite books found :(</h1>
     </div>

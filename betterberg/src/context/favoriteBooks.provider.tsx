@@ -30,14 +30,14 @@ export const FavoriteBooksContext = createContext<FavoriteBooksContextType>({
 
 const FavoriteBooksProvider: React.FC<Props> = ({ children }) => {
   const [books, setBooks] = useState<Book[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<any | null>(null);
 
   const fetcher = useFetch()
 
   const getBooks = async () => {
-    if (isLoading || isFetching) return;
+    if (isFetching) return;
 
     setBooks([])
     setIsFetching(true)
@@ -55,7 +55,7 @@ const FavoriteBooksProvider: React.FC<Props> = ({ children }) => {
   }
   
   const favoriteBook = async (id: string, callback: (v: boolean) => void) => {
-    if (isLoading || isFetching) return;
+    if (isFetching) return;
 
     setIsFetching(true)
     callback(true)
@@ -83,7 +83,7 @@ const FavoriteBooksProvider: React.FC<Props> = ({ children }) => {
   }
   
   const removeFavoriteBook = async (id: string, callback: (v: boolean) => void) => {
-    if (isLoading || isFetching) return;
+    if (isFetching) return;
 
     setIsFetching(true)
     callback(false)
@@ -112,6 +112,7 @@ const FavoriteBooksProvider: React.FC<Props> = ({ children }) => {
   }
 
   useEffect(() => {
+    setIsLoading(true)
     getBooks()
   }, [])
 

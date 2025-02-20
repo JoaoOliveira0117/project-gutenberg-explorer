@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import Card from "./Card";
 import { Book } from '@/types';
 import { CgSpinner } from 'react-icons/cg';
+import BookCardSkeleton from './CardSkeleton';
 
 type Props = {
   books: Book[];
@@ -19,9 +20,13 @@ const BookCardGrid: React.FC<Props> = ({ books, isLoading, addFavorite, removeFa
     router.push(`/books/${id}`);
   };
   
-  if (isLoading) return (
-    <div className="max-w-6xl mx-auto mt-12">
-      <CgSpinner size={64} className="animate-spin min-h-8 min-w-8 text-blue-600 m-auto" />
+  if (isLoading && books.length < 1) return (
+    <div className="max-w-7xl mx-auto p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {[...Array(11)].map((_, i) => (
+          <BookCardSkeleton key={i} />
+        ))}
+      </div>
     </div>
   );
 

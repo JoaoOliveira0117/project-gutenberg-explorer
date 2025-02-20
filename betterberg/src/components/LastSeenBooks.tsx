@@ -1,17 +1,16 @@
 'use client'
 import BookCardGrid from "./BookCard/Grid";
 import { useLastSeenBooks } from "@/hooks/useLastSeenBooks";
+import TryAgain from "./TryAgain/TryAgain";
 
 export default function LastSeenBooks() {
-  const { books, isLoading, error, favoriteBook, removeFavoriteBook } = useLastSeenBooks();
+  const { books, isLoading, isFetching, error, favoriteBook, removeFavoriteBook, getBooks } = useLastSeenBooks();
 
   if (error) return (
-    <div className="max-w-6xl mx-auto mt-12">
-      <h1 className="text-4xl text-center text-red-600">An error occurred while fetching books</h1>
-    </div>
+    <TryAgain onTryAgain={() => getBooks()} isLoading={isLoading || isFetching} />
   )
-
-  if (!books.length) return (
+  
+  if (!isLoading && !isFetching && !books.length) return (
     <div className="max-w-6xl mx-auto mt-12">
       <h1 className="text-lg text-center text-gray-400">No books visited recently</h1>
     </div>

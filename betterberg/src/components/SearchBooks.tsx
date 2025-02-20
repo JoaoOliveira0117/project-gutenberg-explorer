@@ -7,7 +7,7 @@ import { useBooks } from "@/hooks/useBooks";
 
 export default function SearchBooks() {
   const [value, setValue] = useState("");
-  const { setQuery } = useBooks()
+  const { setQuery, isLoading, isFetching } = useBooks()
   
   const throttledSearch = useDebounced((value: string) => {
     setQuery(value);
@@ -21,6 +21,12 @@ export default function SearchBooks() {
   const handleClick = () => {
     setValue("");
     throttledSearch("");
+  }
+
+  if (isLoading || isFetching) {
+    return <div className="w-full max-w-md m-auto">
+      <Search size={28} className="animate-spin min-h-8 min-w-8 text-gray-500 m-auto" />
+    </div>
   }
 
   return (

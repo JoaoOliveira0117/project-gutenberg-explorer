@@ -2,6 +2,7 @@ import { createContext, ReactNode, useEffect, useState } from "react"
 import { Book } from "@/types";
 import { useFetch } from "@/hooks/useFetch";
 import toQueryString from "@/utils/toQueryString";
+import HttpError from "@/http/error";
 
 type BooksContextType = {
   books: Book[];
@@ -42,7 +43,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
   const PAGE_SIZE = 25;
 
   const [books, setBooks] = useState<Book[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<any | null>(null);
   const [page, setPage] = useState(START_PAGE);
@@ -52,7 +53,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
   const fetcher = useFetch()
 
   const getBooks = async () => {
-    if (isLoading || isFetching) return;
+    if (isFetching) return;
 
     setBooks([])
     setIsFetching(true)
@@ -78,7 +79,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
   }
 
   const getMoreBooks = async () => {
-    if (isLoading || isFetching || !canFetchMore) return;
+    if (isFetching || !canFetchMore) return;
 
     setIsFetching(true)
 
@@ -100,7 +101,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
   }
 
   const favoriteBook = async (id: string, callback: (v: boolean) => void) => {
-    if (isLoading || isFetching) return;
+    if (isFetching) return;
 
     setIsFetching(true)
     callback(true)
@@ -128,7 +129,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
   }
   
   const removeFavoriteBook = async (id: string, callback: (v: boolean) => void) => {
-    if (isLoading || isFetching) return;
+    if (isFetching) return;
 
     setIsFetching(true)
     callback(false)
@@ -157,6 +158,7 @@ const BooksProvider: React.FC<Props> = ({ children }) => {
   }
 
   useEffect(() => {
+    setIsLoading(false)
     getBooks()
   }, [query])
 
